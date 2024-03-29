@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        <TextView
+            android:id="@+id/itemBookmarkContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='"강의는 실습 형식으로 진행하는 것이 진리며, 정답이다."'
+            android:fontFamily="@font/pretendard_semi_bold"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:paddingStart="20dp"
+            android:paddingTop="34dp"
+            android:paddingBottom="34dp"
+            android:layout_weight="9"
+            android:layout_gravity="start"
+            android:gravity="start"/>
+        
+        <ImageView
+            android:id="@+id/itemBookmarkCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bookmark_not"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"/>
+    </LinearLayout>
+
+    
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/bac_shadow_down"/>
+
+</LinearLayout>

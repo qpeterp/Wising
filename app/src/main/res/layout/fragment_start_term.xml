@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.StartTermFragment"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="처음 시작은 가장 용기있는자만이 할 수 있다는 어쩌구 저쩌구 대충 명언"
+            android:textSize="40sp"/>
+
+
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/buttonStartTerm"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="54dp"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            android:layout_marginBottom="48dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:background="@drawable/bac_button"-->
+<!--            android:text="시작하기"-->
+<!--            android:fontFamily="@font/pretendard_medium"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="16sp"/>-->
+
+        <com.example.wising.ui.custom.CustomButtonView
+            android:id="@+id/buttonStartTerm"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            app:customBgColor="@color/primaryColor"
+            app:customTitle="시작하기"
+            app:customTextColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="48dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+
+
+
+
+</FrameLayout>

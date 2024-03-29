@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.WiSing.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.WiSing.AppWidgetContainer"
+    android:id="@+id/widgetLayout"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:foregroundGravity="center"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/appwidget_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:fontFamily="@font/pretendard_semi_bold"
+        android:gravity="center"
+        android:foregroundGravity="center"
+        android:text="명언을 설정해주세요."
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+</RelativeLayout>
