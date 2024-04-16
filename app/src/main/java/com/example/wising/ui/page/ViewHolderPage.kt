@@ -1,4 +1,4 @@
-package com.example.wising.ui.page // <- 파일 이름 같을 때, 충돌방지 & 관리 용이
+package com.example.wising.ui.page
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -9,8 +9,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import app.rive.runtime.kotlin.RiveAnimationView
 import com.example.wising.R
 
 
@@ -18,6 +18,7 @@ class ViewHolderPage internal constructor(itemView: View) : RecyclerView.ViewHol
     private val content: TextView
     private val author: TextView
     var data: DataPage? = null
+    private var flag = 0
 
     var bookMarkChecker = true
 
@@ -42,34 +43,51 @@ class ViewHolderPage internal constructor(itemView: View) : RecyclerView.ViewHol
         }
 
 
-        itemView.findViewById<ImageView>(R.id.copy).setOnClickListener {
-            val clipboardManager = itemView.context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
-            val clipData = ClipData.newPlainText("WiSing", content.text)
-            clipboardManager?.setPrimaryClip(clipData)
-        }
-
-        itemView.findViewById<ImageView>(R.id.share).setOnClickListener {
-            // 공유할 텍스트 생성
-            val shareText = "${content.text} - ${author.text}"
-            Log.d("viewHolderPage", shareText)
-            // 공유 인텐트 생성
-            val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, shareText)
+            itemView.findViewById<ImageView>(R.id.copy).setOnClickListener {
+                val clipboardManager = itemView.context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
+                val clipData = ClipData.newPlainText("WiSing", content.text)
+                clipboardManager?.setPrimaryClip(clipData)
             }
-            // 인텐트 선택기를 통해 공유하기
-            val chooser = Intent.createChooser(shareIntent, "공유하기")
-            itemView.context.startActivity(chooser)
-        }
 
+            itemView.findViewById<ImageView>(R.id.share).setOnClickListener {
+                // 공유할 텍스트 생성
+                val shareText = "${content.text} - ${author.text}"
+                Log.d("viewHolderPage", shareText)
+                // 공유 인텐트 생성
+                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, shareText)
+                }
+                // 인텐트 선택기를 통해 공유하기
+                val chooser = Intent.createChooser(shareIntent, "공유하기")
+                itemView.context.startActivity(chooser)
+            }
 
 
     }
 
-    fun onBind(data: DataPage) {
+    fun onBind(data: DataPage, position: Int) {
         this.data = data
         content.text = data.content
         author.text = data.author
 
+
+        this.flag = position
+
+        if (flag != 0) {
+            itemView.findViewById<RiveAnimationView>(R.id.swipeAnimation).visibility = View.GONE
+            itemView.findViewById<ImageView>(R.id.copy).visibility = View.VISIBLE
+            itemView.findViewById<ImageView>(R.id.share).visibility = View.VISIBLE
+            itemView.findViewById<ImageView>(R.id.bookMark).visibility = View.VISIBLE
+
+        }
+        else {
+            itemView.findViewById<RiveAnimationView>(R.id.swipeAnimation).visibility = View.VISIBLE
+            itemView.findViewById<ImageView>(R.id.copy).visibility = View.GONE
+            itemView.findViewById<ImageView>(R.id.share).visibility = View.GONE
+            itemView.findViewById<ImageView>(R.id.bookMark).visibility = View.GONE
+        }
+
+        Log.d("ViewHolderPage", "onBind position : $position")
     }
 }

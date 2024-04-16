@@ -23,12 +23,10 @@ class BookMarkFragment : Fragment() {
 
         val wisingList = ArrayList<BookMarkData>()
 
-        wisingList.add(BookMarkData("성은성은 테스트", true))
         wisingList.add(BookMarkData("안드로이드 테스트", true))
         wisingList.add(BookMarkData("정신나간 테스트", true))
 
-
-        if (wisingList.isEmpty()) {
+        if (!wisingList.isEmpty()) {
             adapter = CustomAdapter(wisingList)
 
             binding.bookmarkRecyclerView.adapter = adapter
@@ -41,11 +39,10 @@ class BookMarkFragment : Fragment() {
             }
         }
         else {
-
+            Toast.makeText(activity,"저장 명언 없는 거 나중에 뷰에 띄우기" , Toast.LENGTH_SHORT).show()
         }
 
-
-
+        binding.bookMarksCount.text = ("${adapter.itemCount}개")
 
         return binding.root
     }

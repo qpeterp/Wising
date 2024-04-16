@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WiSing"
         tools:targetApi="31">
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data android:name="app.rive.runtime.kotlin.RiveInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
         <receiver
             android:name=".ui.bottom.widget.WisingWidget"
             android:exported="false">

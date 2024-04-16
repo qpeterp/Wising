@@ -1,9 +1,11 @@
 package com.example.wising.ui.bottom
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.wising.databinding.FragmentBooksBinding
@@ -28,6 +30,7 @@ class BooksFragment : Fragment() {
         viewPager2 = binding.viewPager
 
         val list = ArrayList<DataPage>()
+        list.add(DataPage("화면을 위로 쓸어\n삻에 한줄을 추가하세요.\n\\ (,,>_<,,) /", "개발자"))
         list.add(DataPage("\"이 이강현이 짱센 주제에 너무 신중하다\"", "이성은1"))
         list.add(DataPage("\"내 이강현은 역시 잘못 되었다\"", "이성은2"))
         list.add(DataPage("\"흔해빠진 이강현으로 세계최강\"", "이성은3"))
@@ -51,6 +54,8 @@ class BooksFragment : Fragment() {
         list.add(DataPage("\"너의 강현은\"", "이성은22"))
         list.add(DataPage("\"이강현의 문단속\"", "이성은23"))
         list.add(DataPage("\"내 뇌 속의 이강현이 대소고를 전력으로 방해하고 있다.\"", "이성은24"))
+        list.add(DataPage("\"전생했더니 서승훈이었던 건에 대하여\"", "이성은25"))
+
 
 
 
@@ -60,10 +65,9 @@ class BooksFragment : Fragment() {
 
 
 
-
-
         return binding.root
 //        return inflater.inflate(R.layout.fragment_books, container, false)
     }
+
 
 }

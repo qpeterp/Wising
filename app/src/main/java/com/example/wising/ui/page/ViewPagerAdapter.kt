@@ -22,8 +22,9 @@ class ViewPagerAdapter internal constructor(private val listData: ArrayList<Data
 
     override fun onBindViewHolder(holder: ViewHolderPage, position: Int) {
         if (holder is ViewHolderPage) {
-            val viewHolder: ViewHolderPage = holder as ViewHolderPage
-            viewHolder.onBind(listData[position])
+            val viewHolder: ViewHolderPage = holder
+            viewHolder.onBind(listData[position], position)
+            Log.d("ViewPagerAdapter", "onBindViewHolder listData ${listData[position].author}")
         }
     }
 

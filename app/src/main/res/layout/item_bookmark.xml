@@ -11,7 +11,7 @@
         android:weightSum="10">
         <TextView
             android:id="@+id/itemBookmarkContent"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text='"강의는 실습 형식으로 진행하는 것이 진리며, 정답이다."'
             android:fontFamily="@font/pretendard_semi_bold"
@@ -22,11 +22,13 @@
             android:paddingBottom="34dp"
             android:layout_weight="9"
             android:layout_gravity="start"
-            android:gravity="start"/>
+            android:gravity="start"
+            android:ellipsize="end"
+            android:maxLines="1"/>
         
         <ImageView
             android:id="@+id/itemBookmarkCheck"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_bookmark_not"
             android:layout_weight="1"

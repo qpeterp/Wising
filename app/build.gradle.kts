@@ -42,6 +42,12 @@ android {
 
 dependencies {
 
+    // Rive
+    // During initialization, you may need to add a dependency
+    // for Jetpack Startup
+    implementation("app.rive:rive-android:8.7.0")
+    implementation("androidx.startup:startup-runtime:1.1.1")
+
     // colorPicker
     implementation ("com.github.skydoves:colorpickerview:2.3.0")
 
