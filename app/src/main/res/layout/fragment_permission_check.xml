@@ -94,7 +94,7 @@
 <!--            android:textColor="@color/white"-->
 <!--            android:textSize="16sp"/>-->
 
-        <com.example.wising.ui.custom.CustomButtonView
+        <com.qpeterp.wising.ui.custom.CustomButtonView
             android:id="@+id/buttonToHome"
             android:layout_width="match_parent"
             android:layout_height="54dp"

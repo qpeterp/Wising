@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/copy"
+        android:layout_width="36dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_copy"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/share"
+        android:layout_width="36dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_share"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toEndOf="@id/copy"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/settingWidget"
+        android:layout_width="36dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_widgets"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/contentDetail"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="속임수는 병법의 기본이다. 그러게 왜 속고그러냐.."
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/authorDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contentDetail"
+        android:text="이성은"
+        android:gravity="end"
+        android:layout_marginEnd="24dp"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,7 @@
         android:id="@+id/startSplashFragment"
         tools:layout="@layout/fragment_start_splash"
         android:label="startSplashFragment"
-        android:name="com.example.wising.ui.StartSplashFragment" >
+        android:name="com.qpeterp.wising.ui.StartSplashFragment" >
 
         <action
             android:id="@+id/action_startSplashFragment_to_startTermFragment"
@@ -23,7 +23,7 @@
         android:id="@+id/startTermFragment"
         tools:layout="@layout/fragment_start_term"
         android:label="startTermFragment"
-        android:name="com.example.wising.ui.StartTermFragment">
+        android:name="com.qpeterp.wising.ui.StartTermFragment">
 
         <action
             android:id="@+id/action_startTermFragment_to_checkPermissionFragment"
@@ -36,7 +36,7 @@
         android:id="@+id/checkPermissionFragment"
         tools:layout="@layout/fragment_permission_check"
         android:label="permissionCheckFragment"
-        android:name="com.example.wising.ui.PermissionCheckFragment">
+        android:name="com.qpeterp.wising.ui.PermissionCheckFragment">
 
         <action
             android:id="@+id/action_checkPermissionFragment_to_homeFragment"
@@ -49,7 +49,7 @@
         android:id="@+id/mainFragment"
         tools:layout="@layout/fragment_main"
         android:label="homeFragment"
-        android:name="com.example.wising.ui.MainFragment">
+        android:name="com.qpeterp.wising.ui.MainFragment">
         <action
             android:id="@+id/action_widgetFragment_to_widgetDialogFragment"
             app:destination="@id/widgetDialogFragment"
@@ -61,6 +61,6 @@
         android:id="@+id/widgetDialogFragment"
         tools:layout="@layout/dialog_wdiget"
         android:label="widgetDialogFragment"
-        android:name="com.example.wising.ui.bottom.widget.WidgetDialogFragment"/>
+        android:name="com.qpeterp.wising.ui.bottom.widget.WidgetDialogFragment"/>
 
 </navigation>
