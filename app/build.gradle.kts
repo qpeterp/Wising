@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 
     // Add the dependency for the Google services Gradle plugin
-    id("com.google.gms.google-services") version "4.4.1" apply false
+    id("com.google.gms.google-services") version "4.3.15" apply false
 }
 
 android {
@@ -47,7 +47,7 @@ dependencies {
     // Rive
     // During initialization, you may need to add a dependency
     // for Jetpack Startup
-    implementation("app.rive:rive-android:8.7.0")
+    implementation("app.rive:rive-android:9.5.5")
     implementation("androidx.startup:startup-runtime:1.1.1")
 
     // colorPicker
@@ -58,9 +58,9 @@ dependencies {
 
 
     // viewModel dependencies
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.3")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.3")
 
     // navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
