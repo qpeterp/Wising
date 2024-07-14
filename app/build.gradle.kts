@@ -1,9 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-
-    // Add the dependency for the Google services Gradle plugin
-    id("com.google.gms.google-services") version "4.3.15" apply false
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -56,7 +54,6 @@ dependencies {
     // shorts
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
-
     // viewModel dependencies
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.3")
 
@@ -70,6 +67,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.google.firebase:firebase-auth:23.0.0")
+    implementation("com.google.firebase:firebase-storage:21.0.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
