@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "300570651567",
-    "project_id": "wising-f4131",
-    "storage_bucket": "wising-f4131.appspot.com"
+    "project_number": "91092909616",
+    "project_id": "wising-c59c3",
+    "storage_bucket": "wising-c59c3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:300570651567:android:9c999b16c21b1a95031d5a",
+        "mobilesdk_app_id": "1:91092909616:android:23a032d32b8e593dd6f7f5",
         "android_client_info": {
           "package_name": "com.qpeterp.wising"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyChm-pW8Em9mlDxwFvor4F1Vv019Og1b08"
+          "current_key": "AIzaSyAcVdPcMkDcV1Bv8r6uy66RmcMMIr0MEdw"
         }
       ],
       "services": {

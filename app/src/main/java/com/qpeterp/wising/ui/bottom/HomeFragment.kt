@@ -22,13 +22,11 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-
         initView()
 
         return binding.root
 //        return inflater.inflate(R.layout.fragment_home, container, false)
     }
-
 
     private fun initView() {
         binding.copyToday.setOnClickListener {
@@ -50,7 +48,5 @@ class HomeFragment : Fragment() {
             val chooser = Intent.createChooser(shareIntent, "공유하기")
             binding.shareToday.context.startActivity(chooser)
         }
-
     }
-
 }

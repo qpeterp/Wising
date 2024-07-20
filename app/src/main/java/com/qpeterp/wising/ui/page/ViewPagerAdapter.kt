@@ -1,33 +1,26 @@
 package com.qpeterp.wising.ui.page
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.qpeterp.wising.R
+import com.qpeterp.wising.data.Quote
 
-
-class ViewPagerAdapter internal constructor(private val listData: ArrayList<DataPage>) :
+class ViewPagerAdapter(
+    private val quotes: List<Quote>,
+) :
     RecyclerView.Adapter<ViewHolderPage>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderPage {
-        val context = parent.context
-        val view: View =
-            LayoutInflater.from(context).inflate(R.layout.item_viewpager, parent, false)
 
-
-        return ViewHolderPage(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ViewHolderPage(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_viewpager, parent, false)
+        )
 
     override fun onBindViewHolder(holder: ViewHolderPage, position: Int) {
-        if (holder is ViewHolderPage) {
-            val viewHolder: ViewHolderPage = holder
-            viewHolder.onBind(listData[position], position)
-            Log.d("ViewPagerAdapter", "onBindViewHolder listData ${listData[position].author}")
-        }
+        holder.onBind(quotes[position], position)
     }
 
-    override fun getItemCount(): Int {
-        return listData.size
-    }
+    override fun getItemCount() = quotes.size
 }

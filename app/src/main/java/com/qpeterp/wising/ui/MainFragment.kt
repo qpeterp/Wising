@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.qpeterp.wising.R
 import com.qpeterp.wising.databinding.FragmentMainBinding
-import com.qpeterp.wising.ui.bottom.bookmark.BookMarkFragment
 import com.qpeterp.wising.ui.bottom.BooksFragment
+import com.qpeterp.wising.ui.bottom.bookmark.BookMarkFragment
 import com.qpeterp.wising.ui.bottom.HomeFragment
 import com.qpeterp.wising.ui.bottom.widget.WidgetFragment
 
