@@ -27,7 +27,7 @@ class CustomAdapter(val wisingList : ArrayList<BookMarkData>): RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: CustomAdapter.Holder, position: Int) {
-        holder.bookmarkContent.text = wisingList[position].content
+        holder.bookmarkContent.text = wisingList[position].quote
 
         var isBookmarked = false // 초기 상태는 북마크되지 않은 상태로 설정
 

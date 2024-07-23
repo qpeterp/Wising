@@ -12,15 +12,22 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.rive.runtime.kotlin.RiveAnimationView
 import com.qpeterp.wising.R
+import com.qpeterp.wising.common.Constant
 import com.qpeterp.wising.data.Quote
+import com.qpeterp.wising.ui.bottom.qoutes.BookmarkManager
 
 
-class ViewHolderPage internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class ViewHolderPage internal constructor(
+    itemView: View,
+    androidId: String
+) : RecyclerView.ViewHolder(itemView) {
     private val content: TextView
     private val author: TextView
-    var data: Quote? = null
+    private lateinit var qouteId: String
+    private var data: Quote? = null
     private var flag = 0
-    var bookMarkChecker = true
+    private var bookMarkChecker = true
+    private val bookmarkManager = BookmarkManager(androidId)
 
     init {
         content = itemView.findViewById(R.id.wisingContent)
@@ -29,13 +36,23 @@ class ViewHolderPage internal constructor(itemView: View) : RecyclerView.ViewHol
         with(itemView.findViewById<ImageView>(R.id.bookMark)) {
             setOnClickListener {
                 bookMarkChecker = if (bookMarkChecker) {
-                    setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.ic_bookmark_ok))
-                    Log.d("ViewHolderPage", "bookmark click")
+                    setImageDrawable(
+                        ContextCompat.getDrawable(
+                            itemView.context,
+                            R.drawable.ic_bookmark_ok
+                        )
+                    )
+                    Log.d(Constant.TAG, "ViewHolderPage init quote id: ${qouteId}")
+                    bookmarkManager.addBookmark(qouteId)
                     false
                 } else {
-                    setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.ic_bookmark_not))
-                    Log.d("ViewHolderPage", "bookmark click")
-
+                    setImageDrawable(
+                        ContextCompat.getDrawable(
+                            itemView.context,
+                            R.drawable.ic_bookmark_not
+                        )
+                    )
+                    bookmarkManager.removeBookmark(qouteId)
                     true
                 }
             }
@@ -65,6 +82,8 @@ class ViewHolderPage internal constructor(itemView: View) : RecyclerView.ViewHol
     fun onBind(data: Quote, position: Int) {
         this.data = data
 
+        qouteId = data.id
+        Log.d(Constant.TAG, "ViewHolderPage onBind quote id: ${qouteId}")
         content.text = data.quote
         author.text = data.name
 

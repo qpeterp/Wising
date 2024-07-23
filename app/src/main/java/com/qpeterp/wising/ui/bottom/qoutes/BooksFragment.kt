@@ -1,5 +1,6 @@
-package com.qpeterp.wising.ui.bottom
+package com.qpeterp.wising.ui.bottom.qoutes
 
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -133,10 +134,10 @@ class BooksFragment : Fragment() {
     }
 
     private fun initView() {
-        quoteList.add(Quote(quote = "화면을 위로 쓸어\n삶에 한줄을 추가해봐요!", name = "개발자"))
+        quoteList.add(Quote(id = "개발자전용", quote = "화면을 위로 쓸어\n삶에 한줄을 추가해봐요!", name = "개발자"))
         loadQuotes()
 
-        viewPager2?.adapter = ViewPagerAdapter(quoteList)
+        viewPager2?.adapter = ViewPagerAdapter(quoteList, requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE).getString("androidId", "").toString())
         viewPager2?.orientation = ViewPager2.ORIENTATION_VERTICAL
 
         viewPager2?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -163,7 +164,7 @@ class BooksFragment : Fragment() {
                 if (result.isEmpty) return@addOnSuccessListener
 
                 for (document in result) {
-                    quoteList.add(Quote(quote = document.data["quote"].toString(), name = document.data["name"].toString()))
+                    quoteList.add(Quote(id = document.id, quote = document.data["quote"].toString(), name = document.data["name"].toString()))
                 }
                 lastVisibleDocument = result.documents[result.size() - 1]
                 viewPager2?.adapter?.notifyDataSetChanged()
