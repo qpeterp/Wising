@@ -12,38 +12,10 @@
         android:name="com.qpeterp.wising.ui.StartSplashFragment" >
 
         <action
-            android:id="@+id/action_startSplashFragment_to_startTermFragment"
-            app:destination="@id/startTermFragment"
+            android:id="@+id/action_startSplashFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
             app:launchSingleTop="true"/>
     </fragment>
-
-
-
-    <fragment
-        android:id="@+id/startTermFragment"
-        tools:layout="@layout/fragment_start_term"
-        android:label="startTermFragment"
-        android:name="com.qpeterp.wising.ui.StartTermFragment">
-
-        <action
-            android:id="@+id/action_startTermFragment_to_checkPermissionFragment"
-            app:destination="@id/checkPermissionFragment"/>
-    </fragment>
-
-
-
-    <dialog
-        android:id="@+id/checkPermissionFragment"
-        tools:layout="@layout/fragment_permission_check"
-        android:label="permissionCheckFragment"
-        android:name="com.qpeterp.wising.ui.PermissionCheckFragment">
-
-        <action
-            android:id="@+id/action_checkPermissionFragment_to_homeFragment"
-            app:destination="@id/mainFragment"/>
-    </dialog>
-
-
 
     <fragment
         android:id="@+id/mainFragment"
