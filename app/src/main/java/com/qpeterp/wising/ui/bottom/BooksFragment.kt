@@ -127,7 +127,6 @@ class BooksFragment : Fragment() {
 //        }
 
         viewPager2 = binding.viewPager
-
         initView()
 
         return binding.root

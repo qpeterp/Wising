@@ -82,7 +82,5 @@ class ViewHolderPage internal constructor(itemView: View) : RecyclerView.ViewHol
             itemView.findViewById<ImageView>(R.id.share).visibility = View.GONE
             itemView.findViewById<ImageView>(R.id.bookMark).visibility = View.GONE
         }
-
-        Log.d("ViewHolderPage", "onBind position : $position")
     }
 }

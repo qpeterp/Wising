@@ -15,7 +15,6 @@ class CustomAdapter(val wisingList : ArrayList<BookMarkData>): RecyclerView.Adap
     }
     var itemClick : ItemClick? = null  //클릭이벤트추가부분
 
-
     inner class Holder(val binding: ItemBookmarkBinding): RecyclerView.ViewHolder(binding.root) {
         val bookmarkContent = binding.itemBookmarkContent
         val bookmark = binding.itemBookmarkCheck
@@ -51,6 +50,4 @@ class CustomAdapter(val wisingList : ArrayList<BookMarkData>): RecyclerView.Adap
     override fun getItemCount(): Int {
         return wisingList.size
     }
-
-
 }

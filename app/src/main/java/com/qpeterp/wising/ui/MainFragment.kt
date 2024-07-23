@@ -16,13 +16,10 @@ class MainFragment : Fragment() {
 
     private val binding by lazy { FragmentMainBinding.inflate(layoutInflater) }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-
         changeFragment(HomeFragment())
 
         binding.bottomBar.setOnNavigationItemSelectedListener {
@@ -37,10 +34,9 @@ class MainFragment : Fragment() {
         }
 
         return binding.root
-//        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    fun changeFragment(fragment: Fragment) {
+    private fun changeFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.mainContent, fragment).commit()
     }

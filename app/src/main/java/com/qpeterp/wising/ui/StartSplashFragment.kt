@@ -20,8 +20,6 @@ class StartSplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-
         // 비동기 작업을 수행할 때, 코루틴을 시작할 때 사용됨
         lifecycleScope.launch {
             delay(1500)
@@ -29,8 +27,6 @@ class StartSplashFragment : Fragment() {
             findNavController().navigate(R.id.action_startSplashFragment_to_mainFragment)
         }
 
-
         return binding.root
-//        return inflater.inflate(R.layout.fragment_start_splash, container, false)
     }
 }

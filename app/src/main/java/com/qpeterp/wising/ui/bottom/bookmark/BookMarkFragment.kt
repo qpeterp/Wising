@@ -21,8 +21,6 @@ class BookMarkFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-
         val wisingList = ArrayList<BookMarkData>()
 
         wisingList.add(BookMarkData("안드로이드 테스트", true))
@@ -54,7 +52,6 @@ class BookMarkFragment : Fragment() {
     private fun clickWising(text : String) {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_book_mark_detail)
-
 
         // Dialog 내부의 View를 참조합니다.
         val contentDetail = dialog.findViewById<TextView>(R.id.contentDetail)

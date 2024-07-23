@@ -31,7 +31,6 @@ class CustomButtonView(context: Context, attrs: AttributeSet?) : RelativeLayout(
             }
 
             layout.backgroundTintList = ColorStateList.valueOf(customBgColor)
-
         }
     }
 }
