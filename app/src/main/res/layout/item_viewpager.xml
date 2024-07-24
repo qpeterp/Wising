@@ -29,7 +29,7 @@
         android:id="@+id/bookMark"
         android:layout_width="42dp"
         android:layout_height="72dp"
-        android:src="@drawable/ic_bookmark_not"
+        android:src="@drawable/ic_check_not"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -39,7 +39,7 @@ class ViewHolderPage internal constructor(
                     setImageDrawable(
                         ContextCompat.getDrawable(
                             itemView.context,
-                            R.drawable.ic_bookmark_ok
+                            R.drawable.ic_check_ok
                         )
                     )
                     Log.d(Constant.TAG, "ViewHolderPage init quote id: ${qouteId}")
@@ -49,7 +49,7 @@ class ViewHolderPage internal constructor(
                     setImageDrawable(
                         ContextCompat.getDrawable(
                             itemView.context,
-                            R.drawable.ic_bookmark_not
+                            R.drawable.ic_check_not
                         )
                     )
                     bookmarkManager.removeBookmark(qouteId)

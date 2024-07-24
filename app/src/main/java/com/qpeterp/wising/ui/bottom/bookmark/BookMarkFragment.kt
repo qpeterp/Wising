@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.qpeterp.wising.R
 import com.qpeterp.wising.common.Constant
 import com.qpeterp.wising.data.BookMarkData
+import com.qpeterp.wising.data.Quote
 import com.qpeterp.wising.databinding.FragmentBookMarkBinding
 import com.qpeterp.wising.ui.bottom.qoutes.BookmarkManager
 import com.qpeterp.wising.utils.shortToast
@@ -22,7 +23,7 @@ class BookMarkFragment : Fragment() {
     private val binding by lazy { FragmentBookMarkBinding.inflate(layoutInflater) }
     private lateinit var adapter: CustomAdapter
     private lateinit var bookmarkManager: BookmarkManager
-    private val wisingList = ArrayList<BookMarkData>()
+    private val wisingList = ArrayList<Quote>()
 
 
     override fun onCreateView(
@@ -36,7 +37,7 @@ class BookMarkFragment : Fragment() {
 
     private fun initView() {
         if (wisingList.isNotEmpty()) {
-            adapter = CustomAdapter(wisingList)
+            adapter = CustomAdapter(wisingList, requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE).getString("androidId", "").toString())
 
             binding.bookmarkRecyclerView.adapter = adapter
             binding.bookmarkRecyclerView.layoutManager = LinearLayoutManager(activity)
@@ -71,7 +72,7 @@ class BookMarkFragment : Fragment() {
                             return@getQuote
                         }
                         Log.d(Constant.TAG,"북마크 명언 데이터: ${quote.name} ${quote.quote}")
-                        wisingList.add(BookMarkData(quote.name, quote.quote))
+                        wisingList.add(Quote(id = quoteId, name = quote.name, quote = quote.quote))
                         initView()
                     }
                 }
