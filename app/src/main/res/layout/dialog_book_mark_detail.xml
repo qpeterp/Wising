@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:minWidth="200dp"
+    android:minHeight="100dp">
 
     <ImageView
         android:id="@+id/copy"
@@ -40,8 +42,8 @@
         android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/share"
+        app:layout_constraintBottom_toTopOf="@id/authorDetail"
         android:text="속임수는 병법의 기본이다. 그러게 왜 속고그러냐.."
         android:textStyle="bold"
         android:textSize="16sp"
@@ -55,11 +57,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contentDetail"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:text="이성은"
         android:gravity="end"
         android:layout_marginEnd="24dp"
         android:textStyle="bold"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp"/>
 
 
 

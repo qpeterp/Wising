@@ -95,6 +95,9 @@ class BookMarkFragment : Fragment() {
         val contentDetail = dialog.findViewById<TextView>(R.id.contentDetail)
         contentDetail.text = quote
 
+        val authorDetail = dialog.findViewById<TextView>(R.id.authorDetail)
+        authorDetail.text = name
+
         dialog.show()
     }
 }
