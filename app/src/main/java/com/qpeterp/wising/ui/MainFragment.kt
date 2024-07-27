@@ -9,11 +9,10 @@ import com.qpeterp.wising.R
 import com.qpeterp.wising.databinding.FragmentMainBinding
 import com.qpeterp.wising.ui.bottom.qoutes.BooksFragment
 import com.qpeterp.wising.ui.bottom.bookmark.BookMarkFragment
-import com.qpeterp.wising.ui.bottom.HomeFragment
+import com.qpeterp.wising.ui.bottom.home.HomeFragment
 import com.qpeterp.wising.ui.bottom.widget.WidgetFragment
 
 class MainFragment : Fragment() {
-
     private val binding by lazy { FragmentMainBinding.inflate(layoutInflater) }
 
     override fun onCreateView(
@@ -28,7 +27,6 @@ class MainFragment : Fragment() {
                 R.id.books -> { changeFragment(BooksFragment()) }
                 R.id.bookMarks -> { changeFragment(BookMarkFragment()) }
                 R.id.widget -> { changeFragment(WidgetFragment()) }
-
             }
             true
         }
@@ -40,5 +38,4 @@ class MainFragment : Fragment() {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.mainContent, fragment).commit()
     }
-
 }
