@@ -1,6 +1,9 @@
 package com.qpeterp.wising.ui.bottom.bookmark
 
 import android.app.Dialog
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
@@ -104,6 +107,10 @@ class BookMarkFragment : Fragment() {
             share(name, quote)
         }
 
+        dialog.findViewById<ImageView>(R.id.copy).setOnClickListener {
+            copy(quote)
+        }
+
         dialog.show()
     }
 
@@ -121,5 +128,11 @@ class BookMarkFragment : Fragment() {
         // 인텐트 선택기를 통해 공유하기
         val chooser = Intent.createChooser(shareIntent, "공유하기")
         requireContext().startActivity(chooser)
+    }
+
+    private fun copy(content: String) {
+        val clipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+        val clipData = ClipData.newPlainText("WiSing", content)
+        clipboardManager?.setPrimaryClip(clipData)
     }
 }
