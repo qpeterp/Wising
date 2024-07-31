@@ -19,7 +19,7 @@ import com.qpeterp.wising.ui.bottom.qoutes.BookmarkManager
 
 class HomeFragment : Fragment() {
     private val binding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
-    private var bookMarkChecker = false
+    private var bookMarkChecker = true
     private lateinit var bookmarkManager: BookmarkManager
     private lateinit var sharedPreferences: SharedPreferences
 
