@@ -4,10 +4,13 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.qpeterp.wising.common.Constant
 import com.qpeterp.wising.data.BookMarkData
+import com.qpeterp.wising.data.Quote
+import kotlin.random.Random
 
 class BookmarkManager(userId: String) {
     private val db = FirebaseFirestore.getInstance()
     private val bookmarksRef = db.collection("users").document(userId).collection("bookmarks")
+    private var bookmarks = mutableListOf<String>()
 
     fun addBookmark(quoteId: String) {
         val bookmark = hashMapOf(
@@ -35,7 +38,9 @@ class BookmarkManager(userId: String) {
     fun getBookmarks(callback: (List<String>) -> Unit) {
         bookmarksRef.get()
             .addOnSuccessListener { result ->
-                val bookmarks = result.map { document -> document.id }
+                for (document in result) {
+                    bookmarks.add(document.id)
+                }
                 callback(bookmarks)
             }
             .addOnFailureListener { e ->
@@ -67,4 +72,35 @@ class BookmarkManager(userId: String) {
                 callback(null)
             }
     }
+
+    fun getRandomQuote(callback: (Quote?) -> Unit) {
+        val quoteRef = db.collection("wising")
+
+        quoteRef.get()
+            .addOnSuccessListener { result ->
+                val documentList = result.documents
+                if (documentList.isNotEmpty()) {
+                    val randomIndex = Random.nextInt(documentList.size)
+                    val randomDocument = documentList[randomIndex]
+                    Log.d(Constant.TAG, randomDocument.id)
+                    val bookMarkData = randomDocument.toObject(BookMarkData::class.java)
+                    if (bookMarkData != null) {
+                        val quote = Quote(
+                            id = randomDocument.id,
+                            name = bookMarkData.name,
+                            quote = bookMarkData.quote
+                        )
+                        callback(quote)
+                    } else {
+                        callback(null)
+                    }
+                } else {
+                    callback(null)
+                }
+            }
+            .addOnFailureListener { exception ->
+                callback(null)
+            }
+    }
+
 }
