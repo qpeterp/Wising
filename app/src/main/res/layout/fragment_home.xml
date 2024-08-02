@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="여러분의 조금을 저에게 모금해주세요."
+                android:text="돈 내놔"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
