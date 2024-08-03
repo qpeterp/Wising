@@ -70,7 +70,7 @@ class BookMarkFragment : Fragment() {
             if (bookmarks.isNotEmpty()) {
                 Log.d(Constant.TAG, "북마크 목록: $bookmarks")
                 for (quoteId in bookmarks) {
-                    bookmarkManager.getQuote(quoteId = quoteId) { quote: BookMarkData? ->
+                    bookmarkManager.getQuotes(quoteId = quoteId) { quote: BookMarkData? ->
                         activity?.runOnUiThread {
                             if (quote == null) {
                                 shortToast("북마크를 불러오지 못했습니다")

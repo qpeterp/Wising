@@ -116,7 +116,7 @@
                     android:id="@+id/toDayWisingContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='"고난이 있는 세상에서 즐거움과 낭만까지 잃는다면 지옥이 아니겠느냐"'
+                    android:text=''
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:fontFamily="@font/pretendard_semi_bold"
@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:text="-이성은-"
+                    android:text=""
                     android:fontFamily="@font/pretendard_semi_bold"
                     android:textColor="@color/black"
                     android:textSize="12sp"

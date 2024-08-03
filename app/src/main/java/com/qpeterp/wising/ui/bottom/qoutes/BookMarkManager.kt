@@ -49,7 +49,7 @@ class BookmarkManager(userId: String) {
             }
     }
 
-    fun getQuote(quoteId: String, callback: (BookMarkData?) -> Unit) {
+    fun getQuotes(quoteId: String, callback: (BookMarkData?) -> Unit) {
         // 'quotes'는 명언이 저장된 컬렉션의 이름입니다. 적절한 이름으로 변경하세요.
         val quoteRef = db.collection("wising").document(quoteId)
 
@@ -103,4 +103,24 @@ class BookmarkManager(userId: String) {
             }
     }
 
+    fun getQuote(quoteId: String, callback: (BookMarkData?) -> Unit) {
+        val quoteRef = db.collection("wising").document(quoteId)
+
+        quoteRef.get()
+            .addOnSuccessListener { result ->
+                    val bookMarkData = result.toObject(BookMarkData::class.java)
+                    if (bookMarkData != null) {
+                        val quote = BookMarkData(
+                            name = bookMarkData.name,
+                            quote = bookMarkData.quote
+                        )
+                        callback(quote)
+                    } else {
+                    callback(null)
+                }
+            }
+            .addOnFailureListener { exception ->
+                callback(null)
+            }
+    }
 }
