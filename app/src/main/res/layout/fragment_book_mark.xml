@@ -48,7 +48,7 @@
                 android:id="@+id/bookMarksCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1개"
+                android:text="0개"
                 android:fontFamily="@font/pretendard_semi_bold"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
