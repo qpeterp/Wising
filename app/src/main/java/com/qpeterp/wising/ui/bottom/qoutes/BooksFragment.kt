@@ -23,6 +23,7 @@ class BooksFragment : Fragment() {
     private var viewPager2: ViewPager2? = null
     private var lastVisibleDocument: DocumentSnapshot? = null
     private var isLoading = false
+    private lateinit var adapter: ViewPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -137,13 +138,14 @@ class BooksFragment : Fragment() {
         quoteList.add(Quote(id = "개발자전용", quote = "화면을 위로 쓸어\n삶에 한줄을 추가해봐요!", name = "개발자"))
         loadQuotes()
 
-        viewPager2?.adapter = ViewPagerAdapter(quoteList, requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE).getString("androidId", "").toString())
+        adapter = ViewPagerAdapter(quoteList, requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE).getString("androidId", "").toString())
+        viewPager2?.adapter = adapter
         viewPager2?.orientation = ViewPager2.ORIENTATION_VERTICAL
 
         viewPager2?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                if (position == quoteList.size - 1 - 1 && !isLoading) { // 9번째 항목에 도달
+                if (position == quoteList.size - 2 && !isLoading) { // 9번째 항목에 도달
                     loadQuotes()
                 }
             }
@@ -154,7 +156,7 @@ class BooksFragment : Fragment() {
         if (isLoading) return
         isLoading = true
 
-        var query = db.collection("wising").limit(10)
+        var query = db.collection("wising").limit(30)
         lastVisibleDocument?.let {
             query = query.startAfter(it)
         }
@@ -163,11 +165,17 @@ class BooksFragment : Fragment() {
             .addOnSuccessListener { result ->
                 if (result.isEmpty) return@addOnSuccessListener
 
-                for (document in result) {
-                    quoteList.add(Quote(id = document.id, quote = document.data["quote"].toString(), name = document.data["name"].toString()))
-                }
+                // 새로운 데이터만 섞기
+                val newQuotes = result.map { document ->
+                    Quote(id = document.id, quote = document.data["quote"].toString(), name = document.data["name"].toString())
+                }.shuffled()
+
+                quoteList.addAll(newQuotes)
+
+                Log.d(Constant.TAG, "BooksFragment loadQuotes quoteList is $quoteList")
+
                 lastVisibleDocument = result.documents[result.size() - 1]
-                viewPager2?.adapter?.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
                 isLoading = false
             }
             .addOnFailureListener { exception ->
