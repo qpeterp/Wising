@@ -35,12 +35,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="돈 내놔"
+                android:text="업데이트 예정"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_weight="6"/>
-
         </LinearLayout>
 
 
