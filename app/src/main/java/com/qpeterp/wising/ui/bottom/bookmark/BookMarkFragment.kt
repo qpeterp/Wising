@@ -14,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.qpeterp.wising.R
 import com.qpeterp.wising.common.Constant
@@ -54,7 +53,6 @@ class BookMarkFragment : Fragment() {
 
         adapter.itemClick = object : CustomAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
-                Toast.makeText(activity, wisingList[position].quote, Toast.LENGTH_SHORT).show()
                 clickWising(wisingList[position].name, wisingList[position].quote)
             }
         }
