@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_semi_bold"
                 android:gravity="center"
-                android:text='"이 이강현이 짱센 주제에 너무 신중하다"'
+                android:text='"명언을 설정해 주세요."'
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:paddingStart="20dp"
