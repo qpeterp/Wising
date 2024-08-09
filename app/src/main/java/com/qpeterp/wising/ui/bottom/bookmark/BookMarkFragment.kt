@@ -84,8 +84,12 @@ class BookMarkFragment : Fragment() {
                         }
                     }
                 }
+                binding.boomMarkEmptyText.visibility = View.GONE
+                binding.bookmarkRecyclerView.visibility = View.VISIBLE
             } else {
                 Log.d(Constant.TAG, "북마크가 없습니다.")
+                binding.boomMarkEmptyText.visibility = View.VISIBLE
+                binding.bookmarkRecyclerView.visibility = View.GONE
             }
         }
     }
