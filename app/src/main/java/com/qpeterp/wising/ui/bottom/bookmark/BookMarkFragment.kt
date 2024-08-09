@@ -67,6 +67,7 @@ class BookMarkFragment : Fragment() {
         bookmarkManager.getBookmarks { bookmarks ->
             if (bookmarks.isNotEmpty()) {
                 Log.d(Constant.TAG, "북마크 목록: $bookmarks")
+                wisingList.clear()
                 for (quoteId in bookmarks) {
                     bookmarkManager.getQuotes(quoteId = quoteId) { quote: BookMarkData? ->
                         activity?.runOnUiThread {
