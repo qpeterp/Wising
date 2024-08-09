@@ -56,8 +56,8 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
     // viewModel dependencies
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.3")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.3")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
 
     // navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
