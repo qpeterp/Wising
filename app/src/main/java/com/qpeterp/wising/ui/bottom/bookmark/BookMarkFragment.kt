@@ -45,6 +45,7 @@ class BookMarkFragment : Fragment() {
         // Check if the fragment is attached to the activity
         if (!isAdded) return
 
+        Log.d(Constant.TAG, "BookMarkFragment initView wisingList : $wisingList")
         adapter = CustomAdapter(wisingList, requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE).getString("androidId", "").toString())
 
         binding.bookmarkRecyclerView.adapter = adapter
@@ -63,11 +64,11 @@ class BookMarkFragment : Fragment() {
             .getString("androidId", "").toString()
         Log.d(Constant.TAG, "BookMarkFragment onCreateView androidId: $androidId")
         bookmarkManager = BookmarkManager(androidId)
+        wisingList.clear()
 
         bookmarkManager.getBookmarks { bookmarks ->
             if (bookmarks.isNotEmpty()) {
                 Log.d(Constant.TAG, "북마크 목록: $bookmarks")
-                wisingList.clear()
                 for (quoteId in bookmarks) {
                     bookmarkManager.getQuotes(quoteId = quoteId) { quote: BookMarkData? ->
                         activity?.runOnUiThread {
@@ -91,6 +92,7 @@ class BookMarkFragment : Fragment() {
                 Log.d(Constant.TAG, "북마크가 없습니다.")
                 binding.boomMarkEmptyText.visibility = View.VISIBLE
                 binding.bookmarkRecyclerView.visibility = View.GONE
+                initView()
             }
         }
     }
