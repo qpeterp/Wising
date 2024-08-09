@@ -26,15 +26,15 @@
         app:layout_constraintStart_toEndOf="@id/copy"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <ImageView
-        android:id="@+id/settingWidget"
-        android:layout_width="36dp"
-        android:layout_height="64dp"
-        android:src="@drawable/ic_widgets"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/settingWidget"-->
+<!--        android:layout_width="36dp"-->
+<!--        android:layout_height="64dp"-->
+<!--        android:src="@drawable/ic_widgets"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="24dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
 
     <TextView
         android:id="@+id/contentDetail"
