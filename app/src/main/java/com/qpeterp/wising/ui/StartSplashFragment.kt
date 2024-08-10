@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.qpeterp.wising.R
 import com.qpeterp.wising.databinding.FragmentStartSplashBinding
-import com.qpeterp.wising.utils.shortToast
 
 class StartSplashFragment : Fragment() {
     private val binding by lazy { FragmentStartSplashBinding.inflate(layoutInflater) }
@@ -23,7 +22,6 @@ class StartSplashFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         requestCameraPermission()
-        requestGalleryPermission()
 
         return binding.root
     }
@@ -46,7 +44,7 @@ class StartSplashFragment : Fragment() {
         when (requestCode) {
             CAMERA_PERMISSION_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    shortToast("카메라 권한 승인")
+                    requestGalleryPermission()
                 } else {
                     // 권한이 거부된 경우 사용자에게 설명이나 추가 도움말을 제공할 수 있습니다.
                     showDialog(requireContext(), 0)
@@ -55,7 +53,6 @@ class StartSplashFragment : Fragment() {
 
             READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    shortToast("갤러리 권한 승인")
                     findNavController().navigate(R.id.action_startSplashFragment_to_mainFragment)
                 } else {
                     // 권한이 거부된 경우 사용자에게 설명이나 추가 도움말을 제공할 수 있습니다.
