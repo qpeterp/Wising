@@ -115,7 +115,7 @@
                     android:id="@+id/toDayWisingContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=''
+                    android:text="작성 중..."
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:fontFamily="@font/pretendard_semi_bold"
