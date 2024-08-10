@@ -150,20 +150,41 @@
                 android:id="@+id/widgetTextImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="8"
+                android:layout_weight="6"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="배경사진"
+                android:text="배경 사진"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
+
             <LinearLayout
-                android:id="@+id/wisingImageBox"
+                android:id="@+id/wisingCameraBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="center"
                 android:orientation="vertical">
                 <ImageView
-                    android:id="@+id/backgroundImage"
+                    android:id="@+id/backgroundImageCamera"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_camera" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="사진촬영"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wisingGalleryBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/backgroundImageGallery"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:src="@drawable/ic_image_search" />
