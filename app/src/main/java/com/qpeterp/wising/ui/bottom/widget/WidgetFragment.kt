@@ -1,13 +1,22 @@
 package com.qpeterp.wising.ui.bottom.widget
 
+import android.app.Activity
 import android.app.Dialog
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +29,7 @@ import androidx.navigation.fragment.findNavController
 import com.qpeterp.wising.R
 import com.qpeterp.wising.common.Constant
 import com.qpeterp.wising.databinding.FragmentWidgetBinding
+import java.io.ByteArrayOutputStream
 
 class WidgetFragment : Fragment() {
     private val binding by lazy { FragmentWidgetBinding.inflate(layoutInflater) }
@@ -30,6 +40,8 @@ class WidgetFragment : Fragment() {
         var textColor = Color.BLACK
         var backgroundColor = Color.parseColor("#FFE0DAFF")
     }
+    private val REQ_GALLERY = 124
+    private val REQ_CAMERA = 123 // 어떤 고유한 정수 값이든 사용 가능
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,9 +63,18 @@ class WidgetFragment : Fragment() {
         val backgroundColor = sharedPreferences.getInt("widgetBackgroundColor", Color.parseColor("#FFE0DAFF"))
         val textColor = sharedPreferences.getInt("widgetTextColor", Color.parseColor("#000000"))
         val text = sharedPreferences.getString("widgetText", "명언을 만들어주세요!")
+        val encodedImage = sharedPreferences.getString("widgetImage", null)
 
         viewModel.setBackgroundColor(backgroundColor)
         viewModel.setTextColor(textColor)
+
+        val image: Bitmap? = decodeBase64ToBitmap(encodedImage)
+        if (image != null) {
+            viewModel.setBackgroundImage(image)
+        } else {
+            Log.e(Constant.TAG, "loadPreferences: Failed to decode image")
+        }
+
         if (text != null) {
             viewModel.setText(text)
         }
@@ -83,6 +104,14 @@ class WidgetFragment : Fragment() {
         binding.widgetText.setOnClickListener {
             changeText()
         }
+
+        binding.wisingCameraBox.setOnClickListener {
+            openCamera()
+        }
+
+        binding.wisingGalleryBox.setOnClickListener {
+            openGallery()
+        }
     }
 
     private fun observeViewModel() {
@@ -92,6 +121,10 @@ class WidgetFragment : Fragment() {
 
         viewModel.textColor.observe(viewLifecycleOwner) { color ->
             binding.widgetText.setTextColor(color)
+        }
+
+        viewModel.backgroundImage.observe(viewLifecycleOwner) { image ->
+            binding.widgetImage.setImageBitmap(image)
         }
     }
 
@@ -115,7 +148,19 @@ class WidgetFragment : Fragment() {
 
             val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE)
             val editor = sharedPreferences.edit()
+
+            // 텍스트, 색상 정보 저장
             editor.putString("widgetText", wising)
+            editor.putInt("widgetTextColor", textColor)
+            editor.putInt("widgetBackgroundColor", backgroundColor)
+
+            // 이미지가 있는지 확인한 후 Base64로 인코딩하여 저장
+            val bitmap = (binding.widgetImage.drawable as? BitmapDrawable)?.bitmap
+            if (bitmap != null) {
+                val encodedImage = encodeBitmapToBase64(bitmap)
+                editor.putString("widgetImage", encodedImage)
+            }
+
             editor.apply() // 데이터를 비동기적으로 저장
 
             context?.sendBroadcast(intent)
@@ -138,5 +183,83 @@ class WidgetFragment : Fragment() {
 
         textContent.text = binding.widgetText.text
         dialog.show()
+    }
+
+    private fun openCamera() {
+        Log.d(Constant.TAG, "WidgetFragment openCamera is run")
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, REQ_CAMERA)
+    }
+
+    private fun openGallery() {
+        Log.d(Constant.TAG, "WidgetFragment openGallery is run")
+        val intent = Intent(Intent.ACTION_PICK)
+
+        intent.type = MediaStore.Images.Media.CONTENT_TYPE
+        startActivityForResult(intent, REQ_GALLERY)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when(requestCode) {
+                REQ_CAMERA -> {
+                    if (data?.extras?.get("data") != null) {
+                        val bitmap = data.extras?.get("data") as Bitmap
+                        binding.widgetImage.setImageBitmap(bitmap)
+                    }
+                }
+
+                REQ_GALLERY -> {
+                    // 갤러리에서 이미지를 가져오는 부분
+                    val selectedImageUri: Uri? = data?.data
+                    val selectedImagePath: String? = selectedImageUri?.let { getPathFromUri(it) }
+
+                    if (selectedImagePath != null) {
+                        // 선택한 이미지를 비트맵으로 변환하여 이미지뷰에 설정
+                        val bitmap = BitmapFactory.decodeFile(selectedImagePath)
+                        binding.widgetImage.setImageBitmap(bitmap)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getPathFromUri(uri: Uri): String {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor? = requireContext().contentResolver.query(uri, projection, null, null, null)
+        return cursor?.use {
+            val columnIndex: Int = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            it.moveToFirst()
+            it.getString(columnIndex)
+        } ?: ""
+    }
+
+    // Bitmap을 Base64로 인코딩하는 메서드
+    private fun encodeBitmapToBase64(bitmap: Bitmap): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    }
+
+    private fun decodeBase64ToBitmap(encodedImage: String?): Bitmap? {
+        // Base64 문자열이 null이거나 비어있는 경우 null 반환
+        if (encodedImage.isNullOrEmpty()) {
+            Log.e(Constant.TAG, "decodeBase64ToBitmap: Encoded image is null or empty")
+            return null
+        }
+
+        return try {
+            val byteArray = Base64.decode(encodedImage, Base64.DEFAULT)
+            BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size) ?: run {
+                Log.e(Constant.TAG, "decodeBase64ToBitmap: Decoded byte array is null")
+                null
+            }
+        } catch (e: IllegalArgumentException) {
+            Log.e(Constant.TAG, "decodeBase64ToBitmap: Invalid Base64 input", e)
+            null
+        }
     }
 }

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/widgetTextBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,6 +24,16 @@
             android:layout_marginTop="64dp"
             android:layout_marginEnd="20dp"
             android:gravity="center">
+            <ImageView
+                android:id="@+id/widgetImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="300dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
             <TextView
                 android:id="@+id/widgetText"
                 android:layout_width="wrap_content"
@@ -37,8 +47,11 @@
                 android:paddingTop="32dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="32dp"
-                android:layout_gravity="center"/>
-        </LinearLayout>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/hintEditText"

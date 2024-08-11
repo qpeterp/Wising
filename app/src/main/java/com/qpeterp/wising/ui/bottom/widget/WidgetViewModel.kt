@@ -2,10 +2,13 @@ package com.qpeterp.wising.ui.bottom.widget
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.qpeterp.wising.common.Constant
 
 class WidgetViewModel(application: Application) : AndroidViewModel(application) {
     private val _backgroundColor = MutableLiveData<Int>().apply {
@@ -39,6 +42,16 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         saveTextToPreferences(text)
     }
 
+    private val _backgroundImage = MutableLiveData<Bitmap>().apply {
+        value = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
+    }
+    val backgroundImage: LiveData<Bitmap> get() = _backgroundImage
+
+    fun setBackgroundImage(image: Bitmap) {
+        _backgroundImage.value = image
+        saveImageToPreferences(image.toString())
+    }
+
 
     private fun saveColorToPreferences(key: String, color: Int) {
         val sharedPreferences = getApplication<Application>().getSharedPreferences("user_prefs", MODE_PRIVATE)
@@ -51,6 +64,14 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         val sharedPreferences = getApplication<Application>().getSharedPreferences("user_prefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("widgetText", text)
+        editor.apply()
+    }
+
+    private fun saveImageToPreferences(image: String) {
+        Log.d(Constant.TAG, "WidgetViewModel saveImageToPreferences is run $image")
+        val sharedPreferences = getApplication<Application>().getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("widgetImage", image)
         editor.apply()
     }
 }
