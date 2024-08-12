@@ -76,6 +76,9 @@ class WidgetFragment : Fragment() {
 
         if (text != null) {
             viewModel.setText(text)
+            Log.d(Constant.TAG, "WidgetFragment loadPreferences text is $text")
+        } else {
+            Log.d(Constant.TAG, "WidgetFragment loadPreferences text is null")
         }
     }
 
@@ -123,6 +126,10 @@ class WidgetFragment : Fragment() {
         viewModel.backgroundImage.observe(viewLifecycleOwner) { image ->
             binding.widgetImage.setImageBitmap(image)
         }
+
+        viewModel.text.observe(viewLifecycleOwner) { text ->
+            binding.widgetText.text = text
+        }
     }
 
     private fun applyWidget() {
@@ -167,6 +174,9 @@ class WidgetFragment : Fragment() {
     }
 
     private fun changeText() {
+        val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_widget_text)
 
@@ -175,6 +185,7 @@ class WidgetFragment : Fragment() {
 
         buttonClose.setOnClickListener {
             binding.widgetText.text = textContent.text
+            editor.putString("widgetText", textContent.text.toString())
             dialog.dismiss()
         }
 
