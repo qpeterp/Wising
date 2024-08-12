@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -105,6 +104,10 @@ class WidgetFragment : Fragment() {
 
         binding.colorReset.setOnClickListener {
             resetWidgetColor()
+        }
+
+        binding.imageReset.setOnClickListener {
+            resetWidgetImage()
         }
     }
 
@@ -268,6 +271,16 @@ class WidgetFragment : Fragment() {
 
         editor.putInt("widgetTextColor", Color.BLACK)
         editor.putInt("widgetBackgroundColor", Color.WHITE)
+
+        editor.apply()
+    }
+
+    private fun resetWidgetImage() {
+        val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        editor.putString("widgetImage", null)
+        binding.widgetImage.setImageBitmap(null)
 
         editor.apply()
     }

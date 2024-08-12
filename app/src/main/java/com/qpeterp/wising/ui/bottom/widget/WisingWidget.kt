@@ -47,6 +47,8 @@ internal fun updateAppWidget(
 
     if (encodedImage != null) {
         views.setImageViewBitmap(R.id.appwidget_image, decodeBase64ToBitmap(encodedImage.toString()))
+    } else {
+        views.setImageViewBitmap(R.id.appwidget_image, null)
     }
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
