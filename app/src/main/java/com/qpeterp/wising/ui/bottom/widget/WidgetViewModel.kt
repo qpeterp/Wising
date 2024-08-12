@@ -4,16 +4,14 @@ import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.qpeterp.wising.common.Constant
 
 class WidgetViewModel(application: Application) : AndroidViewModel(application) {
-    private val _backgroundColor = MutableLiveData<Int>().apply {
-        value = Color.parseColor("#FFE0DAFF")
-    }
+    private val sharedPreferences = getApplication<Application>().getSharedPreferences("user_prefs", MODE_PRIVATE)
+    private val editor = sharedPreferences.edit()
+    private val _backgroundColor = MutableLiveData<Int>(Color.parseColor("#FFE0DAFF"))
     val backgroundColor: LiveData<Int> get() = _backgroundColor
 
     fun setBackgroundColor(color: Int) {
@@ -21,9 +19,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         saveColorToPreferences("widgetBackgroundColor", color)
     }
 
-    private val _textColor = MutableLiveData<Int>().apply {
-        value = Color.parseColor("#000000")
-    }
+    private val _textColor = MutableLiveData<Int>(Color.parseColor("#000000"))
     val textColor: LiveData<Int> get() = _textColor
 
     fun setTextColor(color: Int) {
@@ -32,9 +28,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     }
 
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "명언을 만들어 주세요"
-    }
+    private val _text = MutableLiveData<String>("명언을 만들어 주세요")
     val text: LiveData<String> get() = _text
 
     fun setText(text: String) {
@@ -42,9 +36,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         saveTextToPreferences(text)
     }
 
-    private val _backgroundImage = MutableLiveData<Bitmap>().apply {
-        value = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
-    }
+    private val _backgroundImage = MutableLiveData<Bitmap>(Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888))
     val backgroundImage: LiveData<Bitmap> get() = _backgroundImage
 
     fun setBackgroundImage(image: Bitmap) {
@@ -52,26 +44,32 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         saveImageToPreferences(image.toString())
     }
 
+    private val _backgroundImageAlpha = MutableLiveData<Float>(1.0F)
+    val backgroundImageAlpha: LiveData<Float> get() = _backgroundImageAlpha
+
+    fun setBackgroundImageAlpha(alpha: Float) {
+        _backgroundImageAlpha.value = alpha
+        saveImageAlphaToPreferences(alpha)
+    }
+
 
     private fun saveColorToPreferences(key: String, color: Int) {
-        val sharedPreferences = getApplication<Application>().getSharedPreferences("user_prefs", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
         editor.putInt(key, color)
         editor.apply()
     }
 
     private fun saveTextToPreferences(text: String) {
-        val sharedPreferences = getApplication<Application>().getSharedPreferences("user_prefs", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
         editor.putString("widgetText", text)
         editor.apply()
     }
 
     private fun saveImageToPreferences(image: String) {
-        Log.d(Constant.TAG, "WidgetViewModel saveImageToPreferences is run $image")
-        val sharedPreferences = getApplication<Application>().getSharedPreferences("user_prefs", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
         editor.putString("widgetImage", image)
+        editor.apply()
+    }
+
+    private fun saveImageAlphaToPreferences(alpha: Float) {
+        editor.putFloat("widgetImageAlpha", alpha)
         editor.apply()
     }
 }

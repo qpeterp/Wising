@@ -195,6 +195,27 @@
                     android:layout_weight="1"/>
 
                 <LinearLayout
+                    android:id="@+id/wisingAlphaBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/backgroundImageAlpha"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_opacity"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:text="투명도"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/wisingCameraBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

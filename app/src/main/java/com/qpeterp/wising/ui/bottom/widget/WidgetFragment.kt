@@ -20,6 +20,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -63,9 +64,11 @@ class WidgetFragment : Fragment() {
         val textColor = sharedPreferences.getInt("widgetTextColor", Color.parseColor("#000000"))
         val text = sharedPreferences.getString("widgetText", "명언을 만들어주세요!")
         val encodedImage = sharedPreferences.getString("widgetImage", null)
+        val alphaValue = sharedPreferences.getFloat("widgetImageAlpha", 1.0F)
 
         viewModel.setBackgroundColor(backgroundColor)
         viewModel.setTextColor(textColor)
+        viewModel.setBackgroundImageAlpha(alphaValue)
 
         val image: Bitmap? = decodeBase64ToBitmap(encodedImage)
         if (image != null) {
@@ -93,25 +96,17 @@ class WidgetFragment : Fragment() {
             findNavController().navigate(R.id.action_widgetFragment_to_widgetDialogFragment)
         }
 
-        binding.widgetText.setOnClickListener {
-            changeText()
-        }
+        binding.widgetText.setOnClickListener { changeText() }
 
-        binding.wisingCameraBox.setOnClickListener {
-            openCamera()
-        }
+        binding.wisingCameraBox.setOnClickListener { openCamera() }
 
-        binding.wisingGalleryBox.setOnClickListener {
-            openGallery()
-        }
+        binding.wisingGalleryBox.setOnClickListener { openGallery() }
 
-        binding.colorReset.setOnClickListener {
-            resetWidgetColor()
-        }
+        binding.wisingAlphaBox.setOnClickListener { setImageAlpha() }
 
-        binding.imageReset.setOnClickListener {
-            resetWidgetImage()
-        }
+        binding.colorReset.setOnClickListener { resetWidgetColor() }
+
+        binding.imageReset.setOnClickListener { resetWidgetImage() }
     }
 
     private fun observeViewModel() {
@@ -129,6 +124,10 @@ class WidgetFragment : Fragment() {
 
         viewModel.text.observe(viewLifecycleOwner) { text ->
             binding.widgetText.text = text
+        }
+
+        viewModel.backgroundImageAlpha.observe(viewLifecycleOwner) { alpha ->
+            binding.widgetImage.alpha = alpha
         }
     }
 
@@ -271,6 +270,41 @@ class WidgetFragment : Fragment() {
         }
     }
 
+    private fun setImageAlpha() {
+        val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog_image_alpha)
+
+        val buttonClose = dialog.findViewById<TextView>(R.id.widgetImageAlphaButton)
+        val seekBar = dialog.findViewById<SeekBar>(R.id.widgetImageAlphaSeekbar)
+
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                // 사용자가 SeekBar를 움직일 때 호출됨
+                // progress 값을 사용
+                val alphaValue = progress / 100.0f // 0에서 100 범위를 0.0에서 1.0 범위로 변환
+
+                viewModel.setBackgroundImageAlpha(alphaValue)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
+        buttonClose.setOnClickListener {
+            if (viewModel.backgroundImageAlpha.value != null) {
+                editor.putFloat("widgetImageAlpha", viewModel.backgroundImageAlpha.value!!)
+            } else {
+                editor.putFloat("widgetImageAlpha", 1.0F)
+            }
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
     private fun resetWidgetColor() {
         backgroundColor = Color.WHITE
         textColor = Color.BLACK
@@ -291,8 +325,12 @@ class WidgetFragment : Fragment() {
         val editor = sharedPreferences.edit()
 
         editor.putString("widgetImage", null)
+        editor.putFloat("widgetImageAlpha", 1.0F)
+        viewModel.setBackgroundImageAlpha(1.0F)
         binding.widgetImage.setImageBitmap(null)
 
         editor.apply()
+
+        applyWidget()
     }
 }

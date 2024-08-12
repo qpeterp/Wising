@@ -31,7 +31,7 @@
 
     <dialog
         android:id="@+id/widgetDialogFragment"
-        tools:layout="@layout/dialog_wdiget"
+        tools:layout="@layout/dialog_widget"
         android:label="widgetDialogFragment"
         android:name="com.qpeterp.wising.ui.bottom.widget.WidgetDialogFragment"/>
 

@@ -38,7 +38,7 @@ internal fun updateAppWidget(
     val widgetTextColor = sharedPreferences.getInt("widgetTextColor", Color.BLACK)
     val widgetBackgroundColor = sharedPreferences.getInt("widgetBackgroundColor", Color.parseColor("#FFE0DAFF"))
     val encodedImage = sharedPreferences.getString("widgetImage", null)
-    Log.d(Constant.TAG, "WisingWidget updateAppWidget is run")
+    val alphaValue = sharedPreferences.getFloat("widgetImageAlpha", 1.0F)
 
     val views = RemoteViews(context.packageName, R.layout.wising_widget)
     views.setTextViewText(R.id.appwidget_text, widgetText)
@@ -46,7 +46,7 @@ internal fun updateAppWidget(
     views.setInt(R.id.widgetLayout, "setBackgroundColor", widgetBackgroundColor)
 
     if (encodedImage != null) {
-        views.setImageViewBitmap(R.id.appwidget_image, decodeBase64ToBitmap(encodedImage.toString()))
+        views.setImageViewBitmap(R.id.appwidget_image, decodeBase64ToBitmapWithAlpha(encodedImage.toString(), alphaValue))
     } else {
         views.setImageViewBitmap(R.id.appwidget_image, null)
     }
@@ -54,12 +54,26 @@ internal fun updateAppWidget(
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
 
-private fun decodeBase64ToBitmap(encodedImage: String): Bitmap? {
+private fun decodeBase64ToBitmapWithAlpha(encodedImage: String, alpha: Float): Bitmap? {
     return try {
         val byteArray = Base64.decode(encodedImage, Base64.DEFAULT)
-        BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+        val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+
+        // Create a mutable copy of the bitmap to apply alpha
+        val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+
+        // Iterate through each pixel to apply alpha
+        for (x in 0 until mutableBitmap.width) {
+            for (y in 0 until mutableBitmap.height) {
+                val color = mutableBitmap.getPixel(x, y)
+                val newColor = Color.argb((alpha * 255).toInt(), Color.red(color), Color.green(color), Color.blue(color))
+                mutableBitmap.setPixel(x, y, newColor)
+            }
+        }
+
+        mutableBitmap
     } catch (e: Exception) {
-        Log.e(Constant.TAG, "Failed to decode Base64 to Bitmap", e)
+        Log.e(Constant.TAG, "Failed to decode Base64 to Bitmap with alpha", e)
         null
     }
 }
