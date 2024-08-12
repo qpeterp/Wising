@@ -8,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import com.qpeterp.wising.databinding.DialogWdigetBinding
+import com.qpeterp.wising.databinding.DialogWidgetBinding
 import com.skydoves.colorpickerview.flag.BubbleFlag
 import com.skydoves.colorpickerview.flag.FlagMode
 import com.skydoves.colorpickerview.listeners.ColorListener
 import com.skydoves.colorpickerview.preference.ColorPickerPreferenceManager
 
 class WidgetDialogFragment : DialogFragment() {
-    private val binding by lazy { DialogWdigetBinding.inflate(layoutInflater) }
+    private val binding by lazy { DialogWidgetBinding.inflate(layoutInflater) }
     private val viewModel: WidgetViewModel by lazy { ViewModelProvider(requireActivity()).get(WidgetViewModel::class.java) }
     private var widgetColor = 0
 
