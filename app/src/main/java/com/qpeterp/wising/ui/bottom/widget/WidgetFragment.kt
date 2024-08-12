@@ -82,23 +82,13 @@ class WidgetFragment : Fragment() {
 
     private fun initView() {
         binding.backgroundColorBox.setOnClickListener {
-            try {
-                flags = 0
-                findNavController().navigate(R.id.action_widgetFragment_to_widgetDialogFragment)
-            }
-            catch (e:Exception) {
-                Log.e("WidgetFragment SSapBug", "bug : ",e)
-            }
+            flags = 0
+            findNavController().navigate(R.id.action_widgetFragment_to_widgetDialogFragment)
         }
 
         binding.textColorBox.setOnClickListener {
-            try {
-                flags = 1
-                findNavController().navigate(R.id.action_widgetFragment_to_widgetDialogFragment)
-            }
-            catch (e:Exception) {
-                Log.e("WidgetFragment SSapBug", "bug : ",e)
-            }
+            flags = 1
+            findNavController().navigate(R.id.action_widgetFragment_to_widgetDialogFragment)
         }
 
         binding.widgetText.setOnClickListener {
@@ -111,6 +101,10 @@ class WidgetFragment : Fragment() {
 
         binding.wisingGalleryBox.setOnClickListener {
             openGallery()
+        }
+
+        binding.colorReset.setOnClickListener {
+            resetWidgetColor()
         }
     }
 
@@ -261,5 +255,20 @@ class WidgetFragment : Fragment() {
             Log.e(Constant.TAG, "decodeBase64ToBitmap: Invalid Base64 input", e)
             null
         }
+    }
+
+    private fun resetWidgetColor() {
+        backgroundColor = Color.WHITE
+        textColor = Color.BLACK
+        viewModel.setBackgroundColor(backgroundColor) // ViewModel에 배경 색상 변경 알림
+        viewModel.setTextColor(textColor) // ViewModel에 배경 색상 변경 알림
+
+        val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        editor.putInt("widgetTextColor", Color.BLACK)
+        editor.putInt("widgetBackgroundColor", Color.WHITE)
+
+        editor.apply()
     }
 }
