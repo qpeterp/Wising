@@ -64,7 +64,7 @@
                 android:id="@+id/hintEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="터치해서 명언을 작성해보세요"
+                android:text="글자를 터치해서 명언을 작성해보세요"
                 android:textColor="@color/gray"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
