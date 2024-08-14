@@ -46,12 +46,25 @@ internal fun updateAppWidget(
     views.setInt(R.id.widgetLayout, "setBackgroundColor", widgetBackgroundColor)
 
     if (encodedImage != null) {
-        views.setImageViewBitmap(R.id.appwidget_image, decodeBase64ToBitmapWithAlpha(encodedImage.toString(), alphaValue))
+        // 최적화된 비트맵 사용
+        val bitmap = decodeBase64ToBitmapWithAlpha(encodedImage, alphaValue)
+        val resizedBitmap = bitmap?.let { resizeBitmapToFitWidget(context, it) }
+        views.setImageViewBitmap(R.id.appwidget_image, resizedBitmap)
     } else {
         views.setImageViewBitmap(R.id.appwidget_image, null)
     }
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
+}
+
+// 위젯 크기에 맞춰 비트맵 크기를 조정하는 함수
+private fun resizeBitmapToFitWidget(context: Context, bitmap: Bitmap): Bitmap {
+    // 위젯의 크기를 가져오기
+    val displayMetrics = context.resources.displayMetrics
+    val widgetWidth = displayMetrics.widthPixels / 4  // 적당한 배율로 조정
+    val widgetHeight = displayMetrics.heightPixels / 8
+
+    return Bitmap.createScaledBitmap(bitmap, widgetWidth, widgetHeight, true)
 }
 
 private fun decodeBase64ToBitmapWithAlpha(encodedImage: String, alpha: Float): Bitmap? {
