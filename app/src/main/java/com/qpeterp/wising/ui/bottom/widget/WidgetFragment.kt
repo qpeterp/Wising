@@ -245,28 +245,49 @@ class WidgetFragment : Fragment() {
 
     // Bitmap을 Base64로 인코딩하는 메서드
     private fun encodeBitmapToBase64(bitmap: Bitmap): String {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-        val byteArray = byteArrayOutputStream.toByteArray()
-        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+        return try {
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+            val byteArray = byteArrayOutputStream.toByteArray()
+            byteArrayOutputStream.close()
+            Base64.encodeToString(byteArray, Base64.DEFAULT)
+        } catch (e: Exception) {
+            Log.e(Constant.TAG, "encodeBitmapToBase64: Failed to encode bitmap", e)
+            ""
+        }
     }
 
+    // Base64를 Bitmap으로 디코딩하는 메서드
     private fun decodeBase64ToBitmap(encodedImage: String?): Bitmap? {
-        // Base64 문자열이 null이거나 비어있는 경우 null 반환
         if (encodedImage.isNullOrEmpty()) {
             Log.e(Constant.TAG, "decodeBase64ToBitmap: Encoded image is null or empty")
             return null
         }
-
         return try {
             val byteArray = Base64.decode(encodedImage, Base64.DEFAULT)
-            BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size) ?: run {
+            BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)?.let { bitmap ->
+                // Bitmap 압축을 사용하여 메모리 사용량 최적화
+                optimizeBitmap(bitmap)
+            } ?: run {
                 Log.e(Constant.TAG, "decodeBase64ToBitmap: Decoded byte array is null")
                 null
             }
         } catch (e: IllegalArgumentException) {
             Log.e(Constant.TAG, "decodeBase64ToBitmap: Invalid Base64 input", e)
             null
+        }
+    }
+
+    // Bitmap 최적화 메서드
+    private fun optimizeBitmap(bitmap: Bitmap): Bitmap {
+        return try {
+            val outputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+            val byteArray = outputStream.toByteArray()
+            BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+        } catch (e: Exception) {
+            Log.e(Constant.TAG, "optimizeBitmap: Failed to optimize bitmap", e)
+            bitmap
         }
     }
 
