@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
         val toDayDate = sharedPreferences.getString("todayDate", "0000-00-00").toString()
         if (getTodayDate() == toDayDate) {
             bookmarkManager.getQuote(
-                sharedPreferences.getString("quoteId", "").toString()
+                sharedPreferences.getString("quoteId", "SDozgEIhIQeXfl5723s3").toString()
             ) { result ->
                 binding.toDayWisingContent.text = result?.quote
                 binding.toDayWisingAuthor.text = result?.name
