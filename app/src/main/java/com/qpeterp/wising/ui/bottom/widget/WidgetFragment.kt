@@ -226,11 +226,15 @@ class WidgetFragment : Fragment() {
                     if (selectedImagePath != null) {
                         // 선택한 이미지를 비트맵으로 변환하여 이미지뷰에 설정
                         val bitmap = BitmapFactory.decodeFile(selectedImagePath)
-                        binding.widgetImage.setImageBitmap(bitmap)
+                        binding.widgetImage.setImageBitmap(resizeBitmapToSize(bitmap))
                     }
                 }
             }
         }
+    }
+
+    private fun resizeBitmapToSize(bitmap: Bitmap): Bitmap {
+        return Bitmap.createScaledBitmap(bitmap, 300, 300, true)
     }
 
     private fun getPathFromUri(uri: Uri): String {
