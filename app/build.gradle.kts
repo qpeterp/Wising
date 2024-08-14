@@ -41,7 +41,7 @@ android {
 
 dependencies {
     // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:29.0.4"))
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
 
     // Rive
     // During initialization, you may need to add a dependency
