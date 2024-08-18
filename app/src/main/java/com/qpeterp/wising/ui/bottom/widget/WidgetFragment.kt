@@ -51,7 +51,6 @@ class WidgetFragment : Fragment() {
             loadPreferences()
             initView()
             observeViewModel()
-            applyWidget()
         } catch (e: Exception) {
             Log.e(Constant.TAG, "WidgetFragment Error in onCreateView", e)
         }
@@ -107,6 +106,8 @@ class WidgetFragment : Fragment() {
         binding.colorReset.setOnClickListener { resetWidgetColor() }
 
         binding.imageReset.setOnClickListener { resetWidgetImage() }
+
+        binding.buttonDecideWidget.setOnClickListener { applyWidget() }
     }
 
     private fun observeViewModel() {
@@ -132,44 +133,42 @@ class WidgetFragment : Fragment() {
     }
 
     private fun applyWidget() {
-        binding.buttonDecideWidget.setOnClickListener {
-            val intent = Intent(context, WisingWidget::class.java)
-            intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+        val intent = Intent(context, WisingWidget::class.java)
+        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
-            val widgetManager = AppWidgetManager.getInstance(context)
-            val widgetIds = widgetManager.getAppWidgetIds(ComponentName(requireContext(), WisingWidget::class.java))
+        val widgetManager = AppWidgetManager.getInstance(context)
+        val widgetIds = widgetManager.getAppWidgetIds(ComponentName(requireContext(), WisingWidget::class.java))
 
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds)
-            wising = binding.widgetText.text.toString()
-            textColor = binding.widgetText.currentTextColor
-            val backgroundDrawable = binding.widgetTextBackground.background
-            backgroundColor = if (backgroundDrawable is ColorDrawable) {
-                backgroundDrawable.color
-            } else {
-                Color.TRANSPARENT
-            }
-
-            val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-
-            // 텍스트, 색상 정보 저장
-            editor.putString("widgetText", wising)
-            editor.putInt("widgetTextColor", textColor)
-            editor.putInt("widgetBackgroundColor", backgroundColor)
-
-            // 이미지가 있는지 확인한 후 Base64로 인코딩하여 저장
-            val bitmap = (binding.widgetImage.drawable as? BitmapDrawable)?.bitmap
-            if (bitmap != null) {
-                val encodedImage = encodeBitmapToBase64(bitmap)
-                editor.putString("widgetImage", encodedImage)
-            }
-
-            editor.apply() // 데이터를 비동기적으로 저장
-
-            context?.sendBroadcast(intent)
-
-            Toast.makeText(activity, "적용되었습니다.", Toast.LENGTH_SHORT).show()
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds)
+        wising = binding.widgetText.text.toString()
+        textColor = binding.widgetText.currentTextColor
+        val backgroundDrawable = binding.widgetTextBackground.background
+        backgroundColor = if (backgroundDrawable is ColorDrawable) {
+            backgroundDrawable.color
+        } else {
+            Color.TRANSPARENT
         }
+
+        val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        // 텍스트, 색상 정보 저장
+        editor.putString("widgetText", wising)
+        editor.putInt("widgetTextColor", textColor)
+        editor.putInt("widgetBackgroundColor", backgroundColor)
+
+        // 이미지가 있는지 확인한 후 Base64로 인코딩하여 저장
+        val bitmap = (binding.widgetImage.drawable as? BitmapDrawable)?.bitmap
+        if (bitmap != null) {
+            val encodedImage = encodeBitmapToBase64(bitmap)
+            editor.putString("widgetImage", encodedImage)
+        }
+
+        editor.apply() // 데이터를 비동기적으로 저장
+
+        context?.sendBroadcast(intent)
+
+        Toast.makeText(activity, "적용되었습니다.", Toast.LENGTH_SHORT).show()
     }
 
     private fun changeText() {
@@ -343,6 +342,8 @@ class WidgetFragment : Fragment() {
         editor.putInt("widgetBackgroundColor", Color.WHITE)
 
         editor.apply()
+
+        applyWidget()
     }
 
     private fun resetWidgetImage() {
