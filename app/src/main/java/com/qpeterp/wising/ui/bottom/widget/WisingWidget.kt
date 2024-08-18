@@ -36,7 +36,7 @@ internal fun updateAppWidget(
     val sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
     val widgetText = sharedPreferences.getString("widgetText", "명언을 만들어주세요!")
     val widgetTextColor = sharedPreferences.getInt("widgetTextColor", Color.BLACK)
-    val widgetBackgroundColor = sharedPreferences.getInt("widgetBackgroundColor", Color.parseColor("#FFE0DAFF"))
+    val widgetBackgroundColor = sharedPreferences.getInt("widgetBackgroundColor", Color.parseColor("#FFFFFFFF"))
     val encodedImage = sharedPreferences.getString("widgetImage", null)
     val alphaValue = sharedPreferences.getFloat("widgetImageAlpha", 1.0F)
 

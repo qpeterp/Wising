@@ -11,7 +11,7 @@ import androidx.lifecycle.MutableLiveData
 class WidgetViewModel(application: Application) : AndroidViewModel(application) {
     private val sharedPreferences = getApplication<Application>().getSharedPreferences("user_prefs", MODE_PRIVATE)
     private val editor = sharedPreferences.edit()
-    private val _backgroundColor = MutableLiveData<Int>(Color.parseColor("#FFE0DAFF"))
+    private val _backgroundColor = MutableLiveData<Int>(Color.parseColor("#FFFFFFFF"))
     val backgroundColor: LiveData<Int> get() = _backgroundColor
 
     fun setBackgroundColor(color: Int) {

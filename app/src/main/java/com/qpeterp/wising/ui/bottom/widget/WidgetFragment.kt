@@ -38,7 +38,7 @@ class WidgetFragment : Fragment() {
         var flags = 0
         var wising = "명언을 만들어 주세요!"
         var textColor = Color.BLACK
-        var backgroundColor = Color.parseColor("#FFE0DAFF")
+        var backgroundColor = Color.parseColor("#FFFFFFFF")
     }
     private val REQ_GALLERY = 124
     private val REQ_CAMERA = 123 // 어떤 고유한 정수 값이든 사용 가능
@@ -59,7 +59,7 @@ class WidgetFragment : Fragment() {
 
     private fun loadPreferences() {
         val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE)
-        val backgroundColor = sharedPreferences.getInt("widgetBackgroundColor", Color.parseColor("#FFE0DAFF"))
+        val backgroundColor = sharedPreferences.getInt("widgetBackgroundColor", Color.parseColor("#FFFFFFFF"))
         val textColor = sharedPreferences.getInt("widgetTextColor", Color.parseColor("#000000"))
         val text = sharedPreferences.getString("widgetText", "명언을 만들어주세요!")
         val encodedImage = sharedPreferences.getString("widgetImage", null)
