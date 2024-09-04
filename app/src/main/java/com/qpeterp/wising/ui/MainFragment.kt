@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import com.qpeterp.wising.R
 import com.qpeterp.wising.common.Constant
 import com.qpeterp.wising.databinding.FragmentMainBinding
@@ -29,7 +30,10 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // 초기 화면을 HomeFragment로 설정
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            handleBackPressed()
+        }
+
         changeFragment(homeFragment)
 
         binding.bottomBar.setOnNavigationItemSelectedListener {
@@ -62,5 +66,10 @@ class MainFragment : Fragment() {
         currentFragment = fragment
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.mainContent, fragment).commit()
+    }
+
+    private fun handleBackPressed() {
+        Log.d(Constant.TAG, "MainFragment handleBackPressed: 뒤로가기 클릭")
+        requireActivity().finish()
     }
 }
