@@ -49,78 +49,64 @@ class BookmarkManager(userId: String) {
             }
     }
 
-    fun getQuotes(quoteId: String, callback: (BookMarkData?) -> Unit) {
+    fun getQuotes(quoteId: String, callback: (BookMarkData) -> Unit) {
         // 'quotes'는 명언이 저장된 컬렉션의 이름입니다. 적절한 이름으로 변경하세요.
         val quoteRef = db.collection("wising").document(quoteId)
 
         quoteRef.get()
             .addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    // 문서가 존재할 경우, 데이터 추출
-                    val quote = document.toObject(BookMarkData::class.java)
-                    Log.d(Constant.TAG, "BookMarkManager getQuote quote: $quote")
-                    callback(quote)
-                } else {
-                    // 문서가 존재하지 않는 경우
-                    Log.d(Constant.TAG, "BookMarkManager getQuote No such document")
-                    callback(null)
-                }
+                if (document == null || !document.exists()) return@addOnSuccessListener
+
+                // 문서가 존재할 경우, 데이터 추출
+                val quote =
+                    document.toObject(BookMarkData::class.java) ?: return@addOnSuccessListener
+                Log.d(Constant.TAG, "BookMarkManager getQuote quote: $quote")
+                callback(quote)
             }
-            .addOnFailureListener { e ->
-                // 쿼리 실패 시
-                Log.w(Constant.TAG, "Error getting document", e)
-                callback(null)
+            .addOnFailureListener { _ ->
             }
     }
 
-    fun getRandomQuote(callback: (Quote?) -> Unit) {
+    fun getRandomQuote(callback: (Quote) -> Unit) {
         val quoteRef = db.collection("wising")
 
         quoteRef.get()
             .addOnSuccessListener { result ->
                 val documentList = result.documents
-                if (documentList.isNotEmpty()) {
-                    val randomIndex = Random.nextInt(documentList.size)
-                    val randomDocument = documentList[randomIndex]
-                    Log.d(Constant.TAG, randomDocument.id)
-                    val bookMarkData = randomDocument.toObject(BookMarkData::class.java)
-                    if (bookMarkData != null) {
-                        val quote = Quote(
-                            id = randomDocument.id,
-                            name = bookMarkData.name,
-                            quote = bookMarkData.quote
-                        )
-                        callback(quote)
-                    } else {
-                        callback(null)
-                    }
-                } else {
-                    callback(null)
-                }
+                if (documentList.isEmpty()) return@addOnSuccessListener
+
+                val randomIndex = Random.nextInt(documentList.size)
+                val randomDocument = documentList[randomIndex]
+                Log.d(Constant.TAG, randomDocument.id)
+                val bookMarkData = randomDocument.toObject(BookMarkData::class.java)
+
+                bookMarkData ?: return@addOnSuccessListener
+                val quote = Quote(
+                    id = randomDocument.id,
+                    name = bookMarkData.name,
+                    quote = bookMarkData.quote
+                )
+                callback(quote)
             }
-            .addOnFailureListener { exception ->
-                callback(null)
+            .addOnFailureListener { _ ->
+
             }
     }
 
-    fun getQuote(quoteId: String, callback: (BookMarkData?) -> Unit) {
+    fun getQuote(quoteId: String, callback: (BookMarkData) -> Unit) {
         val quoteRef = db.collection("wising").document(quoteId)
 
         quoteRef.get()
             .addOnSuccessListener { result ->
-                    val bookMarkData = result.toObject(BookMarkData::class.java)
-                    if (bookMarkData != null) {
-                        val quote = BookMarkData(
-                            name = bookMarkData.name,
-                            quote = bookMarkData.quote
-                        )
-                        callback(quote)
-                    } else {
-                    callback(null)
-                }
+                val bookMarkData =
+                    result.toObject(BookMarkData::class.java) ?: return@addOnSuccessListener
+                val quote = BookMarkData(
+                    name = bookMarkData.name,
+                    quote = bookMarkData.quote
+                )
+                callback(quote)
             }
-            .addOnFailureListener { exception ->
-                callback(null)
+            .addOnFailureListener { _ ->
             }
     }
 }

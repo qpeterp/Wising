@@ -9,28 +9,36 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.qpeterp.wising.R
 
-class CustomButtonView(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
+class CustomButtonView(
+    private val context: Context,
+    private val attrs: AttributeSet?
+) : RelativeLayout(context, attrs) {
 
     init {
-        val view =
-            LayoutInflater.from(context).inflate(R.layout.custom_view_button, this, true)
+        initView()
+    }
 
-        attrs?.let {
-            val typedArray = context.obtainStyledAttributes(it, R.styleable.CustomButtonView)
-            val customTitle = typedArray.getString(R.styleable.CustomButtonView_customTitle)
-            val customTextColor = typedArray.getColor(R.styleable.CustomButtonView_customTextColor, Color.WHITE)
-            val customBgColor = typedArray.getColor(R.styleable.CustomButtonView_customBgColor, Color.WHITE)
-            typedArray.recycle()
+    private fun initView() {
+        val view = LayoutInflater.from(context).inflate(R.layout.custom_view_button, this, true)
 
-            val textView = view.findViewById<TextView>(R.id.customText)
-            val layout = view.findViewById<RelativeLayout>(R.id.customLayout)
+        attrs?: return
 
-            textView.apply {
-                text = customTitle
-                setTextColor(customTextColor)
-            }
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomButtonView)
+        val customTitle = typedArray.getString(R.styleable.CustomButtonView_customTitle)
+        val customTextColor =
+            typedArray.getColor(R.styleable.CustomButtonView_customTextColor, Color.WHITE)
+        val customBgColor =
+            typedArray.getColor(R.styleable.CustomButtonView_customBgColor, Color.WHITE)
+        typedArray.recycle()
 
-            layout.backgroundTintList = ColorStateList.valueOf(customBgColor)
+        val textView = view.findViewById<TextView>(R.id.customText)
+        val layout = view.findViewById<RelativeLayout>(R.id.customLayout)
+
+        textView.apply {
+            text = customTitle
+            setTextColor(customTextColor)
         }
+
+        layout.backgroundTintList = ColorStateList.valueOf(customBgColor)
     }
 }
