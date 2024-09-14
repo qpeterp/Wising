@@ -42,19 +42,17 @@ class MainFragment : Fragment() {
                 R.id.books -> booksFragment
                 R.id.bookMarks -> bookMarkFragment
                 R.id.widget -> widgetFragment
-                else -> null
+                else -> return@setOnNavigationItemSelectedListener false
             }
 
-            if (selectedFragment != null && selectedFragment == currentFragment) {
+            if (selectedFragment == currentFragment) {
                 // 현재 프래그먼트와 선택된 프래그먼트가 동일하면 아무런 동작도 하지 않음
                 Log.d(Constant.TAG, "MainFragment onCreateView 중복 클릭")
                 return@setOnNavigationItemSelectedListener false
             }
 
             // 선택된 프래그먼트로 변경
-            if (selectedFragment != null) {
-                changeFragment(selectedFragment)
-            }
+            changeFragment(selectedFragment)
             true
         }
 

@@ -16,13 +16,12 @@ import com.qpeterp.wising.common.Constant
 import com.qpeterp.wising.data.Quote
 import com.qpeterp.wising.ui.bottom.qoutes.BookmarkManager
 
-
 class ViewHolderPage internal constructor(
     itemView: View,
     androidId: String
 ) : RecyclerView.ViewHolder(itemView) {
-    private val content: TextView
-    private val author: TextView
+    private val content: TextView by lazy { itemView.findViewById(R.id.wisingContent) }
+    private val author: TextView = itemView.findViewById(R.id.wisingAuthor)
     private lateinit var qouteId: String
     private var data: Quote? = null
     private var flag = 0
@@ -30,36 +29,23 @@ class ViewHolderPage internal constructor(
     private val bookmarkManager = BookmarkManager(androidId)
 
     init {
-        content = itemView.findViewById(R.id.wisingContent)
-        author = itemView.findViewById(R.id.wisingAuthor)
-
         with(itemView.findViewById<ImageView>(R.id.bookMark)) {
             setOnClickListener {
-                bookMarkChecker = if (bookMarkChecker) {
-                    setImageDrawable(
-                        ContextCompat.getDrawable(
-                            itemView.context,
-                            R.drawable.ic_check_ok
-                        )
-                    )
-                    Log.d(Constant.TAG, "ViewHolderPage init quote id: ${qouteId}")
+                Log.d(Constant.TAG, "ViewHolderPage init quote id: ${qouteId}")
+                val icon = if (bookMarkChecker) R.drawable.ic_check_ok else R.drawable.ic_check_not
+                setImageDrawable(ContextCompat.getDrawable(itemView.context, icon))
+                if (bookMarkChecker) {
                     bookmarkManager.addBookmark(qouteId)
-                    false
                 } else {
-                    setImageDrawable(
-                        ContextCompat.getDrawable(
-                            itemView.context,
-                            R.drawable.ic_check_not
-                        )
-                    )
                     bookmarkManager.removeBookmark(qouteId)
-                    true
                 }
+                bookMarkChecker = !bookMarkChecker
             }
         }
 
         itemView.findViewById<ImageView>(R.id.copy).setOnClickListener {
-            val clipboardManager = itemView.context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
+            val clipboardManager =
+                itemView.context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
             val clipData = ClipData.newPlainText("WiSing", content.text)
             clipboardManager?.setPrimaryClip(clipData)
         }
@@ -89,17 +75,11 @@ class ViewHolderPage internal constructor(
 
         this.flag = position
 
-        if (flag != 0) {
-            itemView.findViewById<RiveAnimationView>(R.id.swipeAnimation).visibility = View.GONE
-            itemView.findViewById<ImageView>(R.id.copy).visibility = View.VISIBLE
-            itemView.findViewById<ImageView>(R.id.share).visibility = View.VISIBLE
-            itemView.findViewById<ImageView>(R.id.bookMark).visibility = View.VISIBLE
-        }
-        else {
-            itemView.findViewById<RiveAnimationView>(R.id.swipeAnimation).visibility = View.VISIBLE
-            itemView.findViewById<ImageView>(R.id.copy).visibility = View.GONE
-            itemView.findViewById<ImageView>(R.id.share).visibility = View.GONE
-            itemView.findViewById<ImageView>(R.id.bookMark).visibility = View.GONE
-        }
+        val animationVisibility = if (flag == 0) View.VISIBLE else View.GONE
+        val visibility = if (flag == 0) View.GONE else View.VISIBLE
+        itemView.findViewById<RiveAnimationView>(R.id.swipeAnimation).visibility = animationVisibility
+        itemView.findViewById<ImageView>(R.id.copy).visibility = visibility
+        itemView.findViewById<ImageView>(R.id.share).visibility = visibility
+        itemView.findViewById<ImageView>(R.id.bookMark).visibility = visibility
     }
 }

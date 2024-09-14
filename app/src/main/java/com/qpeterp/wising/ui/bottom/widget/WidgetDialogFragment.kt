@@ -28,39 +28,41 @@ class WidgetDialogFragment : DialogFragment() {
     }
 
     private fun initView() {
-        val manager = ColorPickerPreferenceManager.getInstance(activity)
-        manager.setColor("MyColorPicker", widgetColor)
-        manager.setSelectorPosition("MyColorPicker", Point(120, 120))
-        manager.clearSavedAllData()
-        manager.clearSavedColor("MyColorPicker")
-        manager.restoreColorPickerData(binding.colorPickerView)
+        ColorPickerPreferenceManager.getInstance(activity).apply {
+            setColor("MyColorPicker", widgetColor)
+            setSelectorPosition("MyColorPicker", Point(120, 120))
+            clearSavedAllData()
+            clearSavedColor("MyColorPicker")
+            restoreColorPickerData(binding.colorPickerView)
+        }
 
-        binding.colorPickerView.attachAlphaSlider(binding.alphaSlideBar)
-        binding.colorPickerView.attachBrightnessSlider(binding.brightnessSlide)
+        binding.colorPickerView.apply {
+            attachAlphaSlider(binding.alphaSlideBar)
+            attachBrightnessSlider(binding.brightnessSlide)
 
-        val bubbleFlag = BubbleFlag(activity)
-        bubbleFlag.flagMode = FlagMode.FADE
-        binding.colorPickerView.setFlagView(bubbleFlag)
+            val bubbleFlag = BubbleFlag(activity)
+            bubbleFlag.flagMode = FlagMode.FADE
+            setFlagView(bubbleFlag)
 
-        binding.colorPickerView.setColorListener(ColorListener { color, fromUser ->
-            binding.setWidgetColor.setBackgroundColor(color)
-            widgetColor = color
-        })
+            setColorListener(ColorListener { color, _ ->
+                binding.setWidgetColor.setBackgroundColor(color)
+                widgetColor = color
+            })
+        }
 
         binding.widgetSelectButton.setOnClickListener {
+            val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+
             if (WidgetFragment.flags == 0) {
                 viewModel.setBackgroundColor(widgetColor) // ViewModel에 배경 색상 변경 알림
-                val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
                 editor.putInt("widgetBackgroundColor", widgetColor)
-                editor.apply() // 데이터를 비동기적으로 저장
             } else {
                 viewModel.setTextColor(widgetColor) // ViewModel에 글자 색상 변경 알림
-                val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
                 editor.putInt("widgetTextColor", widgetColor)
-                editor.apply() // 데이터를 비동기적으로 저장
             }
+
+            editor.apply() // 데이터를 비동기적으로 저장
             dismiss()
         }
     }

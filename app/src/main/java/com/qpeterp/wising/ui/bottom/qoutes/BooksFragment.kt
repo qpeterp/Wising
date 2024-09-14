@@ -288,6 +288,7 @@ class BooksFragment : Fragment() {
 //            BookMarkData("스티브 잡스", "단순함이 가장 고급스러운 것이다."),
 //            BookMarkData("어니스트 헤밍웨이", "인생은 스스로 결정하는 것이다."),
 //            BookMarkData("프랭클린 D. 루스벨트", "우리는 두려움 그 자체만을 두려워해야 한다."),
+//            BookMarkData("한준혁", "말은 은이고, 침묵은 금이다."),
 //            )
 
 //        quotes.forEach { quote ->

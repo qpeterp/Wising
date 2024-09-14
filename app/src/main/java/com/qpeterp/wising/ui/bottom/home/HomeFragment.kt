@@ -28,7 +28,8 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        sharedPreferences = requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        sharedPreferences =
+            requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         bookmarkManager = BookmarkManager(sharedPreferences.getString("androidId", "").toString())
 
         initView()
@@ -58,8 +59,8 @@ class HomeFragment : Fragment() {
             bookmarkManager.getQuote(
                 sharedPreferences.getString("quoteId", "SDozgEIhIQeXfl5723s3").toString()
             ) { result ->
-                binding.toDayWisingContent.text = result?.quote
-                binding.toDayWisingAuthor.text = result?.name
+                binding.toDayWisingContent.text = result.quote
+                binding.toDayWisingAuthor.text = result.name
             }
             return
         }
@@ -78,14 +79,12 @@ class HomeFragment : Fragment() {
 
     private fun setTodayWising() {
         bookmarkManager.getRandomQuote { bookMarkData ->
-            if (bookMarkData != null) {
-                binding.toDayWisingContent.text = bookMarkData.quote
-                binding.toDayWisingAuthor.text = bookMarkData.name
+            binding.toDayWisingContent.text = bookMarkData.quote
+            binding.toDayWisingAuthor.text = bookMarkData.name
 
-                val editor = sharedPreferences.edit()
-                editor.putString("quoteId", bookMarkData.id)
-                editor.apply()
-            }
+            val editor = sharedPreferences.edit()
+            editor.putString("quoteId", bookMarkData.id)
+            editor.apply()
         }
     }
 
@@ -100,20 +99,22 @@ class HomeFragment : Fragment() {
     }
 
     private fun copy() {
-        val clipboardManager = binding.copyToday.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+        val clipboardManager =
+            binding.copyToday.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
         val clipData = ClipData.newPlainText("WiSing", binding.toDayWisingContent.text)
         clipboardManager?.setPrimaryClip(clipData)
     }
 
     private fun handleBookMark(quoteId: String) {
-        bookMarkChecker = if (bookMarkChecker) {
-            binding.bookMarkToday.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_ok))
+        val icon = if (bookMarkChecker) R.drawable.ic_check_ok else R.drawable.ic_check_not
+
+        binding.bookMarkToday.setImageDrawable(ContextCompat.getDrawable(requireContext(), icon))
+
+        if (bookMarkChecker) {
             bookmarkManager.addBookmark(quoteId)
-            false
         } else {
-            binding.bookMarkToday.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_not))
             bookmarkManager.removeBookmark(quoteId)
-            true
         }
+        bookMarkChecker = !bookMarkChecker
     }
 }
