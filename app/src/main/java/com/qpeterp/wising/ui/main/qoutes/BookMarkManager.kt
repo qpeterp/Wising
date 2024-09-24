@@ -1,4 +1,4 @@
-package com.qpeterp.wising.ui.bottom.qoutes
+package com.qpeterp.wising.ui.main.qoutes
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore

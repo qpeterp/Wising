@@ -1,4 +1,4 @@
-package com.qpeterp.wising.ui.bottom.widget
+package com.qpeterp.wising.ui.main.widget
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE

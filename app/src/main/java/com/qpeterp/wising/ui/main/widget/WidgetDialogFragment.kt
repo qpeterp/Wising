@@ -1,4 +1,4 @@
-package com.qpeterp.wising.ui.bottom.widget
+package com.qpeterp.wising.ui.main.widget
 
 import android.content.Context.MODE_PRIVATE
 import android.graphics.Point

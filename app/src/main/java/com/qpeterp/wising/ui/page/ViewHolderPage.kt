@@ -14,7 +14,7 @@ import app.rive.runtime.kotlin.RiveAnimationView
 import com.qpeterp.wising.R
 import com.qpeterp.wising.common.Constant
 import com.qpeterp.wising.data.Quote
-import com.qpeterp.wising.ui.bottom.qoutes.BookmarkManager
+import com.qpeterp.wising.ui.main.qoutes.BookmarkManager
 
 class ViewHolderPage internal constructor(
     itemView: View,

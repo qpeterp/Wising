@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.bottom.qoutes.BooksFragment"
+    tools:context=".ui.main.qoutes.BooksFragment"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,4 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 </FrameLayout>

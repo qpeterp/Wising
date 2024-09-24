@@ -1,4 +1,4 @@
-package com.qpeterp.wising.ui.bottom.bookmark
+package com.qpeterp.wising.ui.main.bookmark
 
 import android.app.Dialog
 import android.content.ClipData
@@ -20,7 +20,7 @@ import com.qpeterp.wising.common.Constant
 import com.qpeterp.wising.data.BookMarkData
 import com.qpeterp.wising.data.Quote
 import com.qpeterp.wising.databinding.FragmentBookMarkBinding
-import com.qpeterp.wising.ui.bottom.qoutes.BookmarkManager
+import com.qpeterp.wising.ui.main.qoutes.BookmarkManager
 import com.qpeterp.wising.utils.shortToast
 
 class BookMarkFragment : Fragment() {

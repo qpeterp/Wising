@@ -30,7 +30,7 @@
         </provider>
 
         <receiver
-            android:name=".ui.bottom.widget.WisingWidget"
+            android:name=".ui.main.widget.WisingWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
