@@ -44,13 +44,13 @@ android {
 
 dependencies {
     // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
 
     // Rive
     // During initialization, you may need to add a dependency
     // for Jetpack Startup
     implementation("app.rive:rive-android:9.5.5")
-    implementation("androidx.startup:startup-runtime:1.1.1")
+    implementation("androidx.startup:startup-runtime:1.2.0")
 
     // colorPicker
     implementation ("com.github.skydoves:colorpickerview:2.3.0")
@@ -59,12 +59,12 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
     // viewModel dependencies
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
 
     // navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.1")
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
