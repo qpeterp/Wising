@@ -4,9 +4,6 @@
     android:layout_height="match_parent"
     android:theme="@style/Theme.WiSing.AppWidgetContainer"
     android:id="@+id/widgetLayout"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:foregroundGravity="center"
     android:background="@color/white">
 
     <ImageView
