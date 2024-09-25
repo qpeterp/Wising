@@ -1,4 +1,4 @@
-package com.qpeterp.wising.ui.bottom.widget
+package com.qpeterp.wising.ui.main.widget
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -45,6 +45,9 @@ internal fun updateAppWidget(
     views.setTextColor(R.id.appwidget_text, widgetTextColor)
     views.setInt(R.id.widgetLayout, "setBackgroundColor", widgetBackgroundColor)
 
+    /**
+     * 배경 이미지를 삭제한 경우, encodedImage 에 null 값이 들어온다.
+     * */
     if (encodedImage != null) {
         // 최적화된 비트맵 사용
         val bitmap = decodeBase64ToBitmapWithAlpha(encodedImage, alphaValue)
