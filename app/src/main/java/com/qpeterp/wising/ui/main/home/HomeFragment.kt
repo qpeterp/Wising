@@ -1,4 +1,4 @@
-package com.qpeterp.wising.ui.bottom.home
+package com.qpeterp.wising.ui.main.home
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.qpeterp.wising.R
 import com.qpeterp.wising.databinding.FragmentHomeBinding
-import com.qpeterp.wising.ui.bottom.qoutes.BookmarkManager
+import com.qpeterp.wising.ui.main.qoutes.BookmarkManager
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -21,17 +21,14 @@ import java.util.Locale
 class HomeFragment : Fragment() {
     private val binding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
     private var bookMarkChecker = true
-    private lateinit var bookmarkManager: BookmarkManager
+    private lateinit var homeViewModel: HomeViewModel
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var bookmarkManager: BookmarkManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        sharedPreferences =
-            requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
-        bookmarkManager = BookmarkManager(sharedPreferences.getString("androidId", "").toString())
-
         initView()
         checkDayChange()
 
@@ -39,13 +36,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.copyToday.setOnClickListener {
-            copy()
-        }
+        sharedPreferences =
+            requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        bookmarkManager = BookmarkManager(sharedPreferences.getString("androidId", "").toString())
 
-        binding.shareToday.setOnClickListener {
-            share()
-        }
+        homeViewModel = HomeViewModel(requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE))
+
+        binding.copyToday.setOnClickListener { copy() }
+
+        binding.shareToday.setOnClickListener { share() }
 
         binding.bookMarkToday.setOnClickListener {
             val quoteId = sharedPreferences.getString("quoteId", "").toString()
@@ -65,7 +64,7 @@ class HomeFragment : Fragment() {
             return
         }
 
-        setTodayWising()
+        homeViewModel.setTodayQuote()
         val editor = sharedPreferences.edit()
         editor.putString("todayDate", getTodayDate())
         editor.apply()
@@ -75,17 +74,6 @@ class HomeFragment : Fragment() {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return dateFormat.format(calendar.time)
-    }
-
-    private fun setTodayWising() {
-        bookmarkManager.getRandomQuote { bookMarkData ->
-            binding.toDayWisingContent.text = bookMarkData.quote
-            binding.toDayWisingAuthor.text = bookMarkData.name
-
-            val editor = sharedPreferences.edit()
-            editor.putString("quoteId", bookMarkData.id)
-            editor.apply()
-        }
     }
 
     private fun share() {
