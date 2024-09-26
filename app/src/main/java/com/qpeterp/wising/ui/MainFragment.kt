@@ -15,9 +15,7 @@ import com.qpeterp.wising.ui.bottom.bookmark.BookMarkFragment
 import com.qpeterp.wising.ui.bottom.home.HomeFragment
 import com.qpeterp.wising.ui.bottom.widget.WidgetFragment
 
-class MainFragment : Fragment() {
-    private val binding by lazy { FragmentMainBinding.inflate(layoutInflater) }
-
+class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
     // 각 Fragment를 초기화 시점에 생성하여 재사용
     private val homeFragment = HomeFragment()
     private val booksFragment = BooksFragment()
@@ -26,10 +24,7 @@ class MainFragment : Fragment() {
 
     private var currentFragment: Fragment? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun initView() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             handleBackPressed()
         }
@@ -55,8 +50,6 @@ class MainFragment : Fragment() {
             changeFragment(selectedFragment)
             true
         }
-
-        return binding.root
     }
 
     private fun changeFragment(fragment: Fragment) {
