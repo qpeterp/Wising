@@ -12,9 +12,12 @@ class HomeViewModel(
     private var bookmarkManager: BookmarkManager =
         BookmarkManager(sharedPreferences.getString("androidId", "").toString())
     private var _todayQuote = MutableLiveData<List<String>>()
+    private var _todayQuoteBookMarkState = MutableLiveData(false)
 
     val todayQuote: LiveData<List<String>>
         get() = _todayQuote
+    val todayQuoteBookMarkState: LiveData<Boolean>
+        get() = _todayQuoteBookMarkState
 
     /*
     * _todayQuote index 0 <= quote
@@ -27,6 +30,18 @@ class HomeViewModel(
             val editor = sharedPreferences.edit()
             editor.putString("quoteId", bookMarkData.id)
             editor.apply()
+        }
+    }
+
+    fun toggleBookMark() {
+        _todayQuoteBookMarkState.value = _todayQuoteBookMarkState.value!!.not()
+    }
+
+    fun handleBookMark(quoteId: String) {
+        if (_todayQuoteBookMarkState.value == true) {
+            bookmarkManager.addBookmark(quoteId)
+        } else {
+            bookmarkManager.removeBookmark(quoteId)
         }
     }
 }
