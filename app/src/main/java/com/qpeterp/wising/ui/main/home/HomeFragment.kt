@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.qpeterp.wising.R
 import com.qpeterp.wising.databinding.FragmentHomeBinding
 import com.qpeterp.wising.ui.main.qoutes.BookmarkManager
@@ -20,7 +21,6 @@ import java.util.Locale
 
 class HomeFragment : Fragment() {
     private val binding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
-    private var bookMarkChecker = true
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var bookmarkManager: BookmarkManager
@@ -40,10 +40,9 @@ class HomeFragment : Fragment() {
             requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         bookmarkManager = BookmarkManager(sharedPreferences.getString("androidId", "").toString())
 
-        homeViewModel = HomeViewModel(requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE))
+        homeViewModel = ViewModelProvider(requireActivity(), HomeViewModelFactory(sharedPreferences)).get(HomeViewModel::class.java)
 
         binding.copyToday.setOnClickListener { copy() }
-
         binding.shareToday.setOnClickListener { share() }
 
         binding.bookMarkToday.setOnClickListener {
@@ -94,15 +93,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun handleBookMark(quoteId: String) {
-        val icon = if (bookMarkChecker) R.drawable.ic_check_ok else R.drawable.ic_check_not
-
+        homeViewModel.toggleBookMark()
+        val icon = if (homeViewModel.todayQuoteBookMarkState.value == true) R.drawable.ic_check_ok else R.drawable.ic_check_not
         binding.bookMarkToday.setImageDrawable(ContextCompat.getDrawable(requireContext(), icon))
-
-        if (bookMarkChecker) {
-            bookmarkManager.addBookmark(quoteId)
-        } else {
-            bookmarkManager.removeBookmark(quoteId)
-        }
-        bookMarkChecker = !bookMarkChecker
+        homeViewModel.handleBookMark(quoteId)
     }
 }
