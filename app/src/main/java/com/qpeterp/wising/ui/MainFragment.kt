@@ -59,10 +59,23 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
     }
 
     private fun changeFragment(fragment: Fragment) {
+        val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+
+        // 현재 프래그먼트가 null이 아니고 보여져 있다면 숨김 처리
+        currentFragment?.let {
+            fragmentTransaction.hide(it)
+        }
+
+        // 해당 프래그먼트가 이미 추가된 경우 보여주기, 아니면 추가하기
+        if (fragment.isAdded) {
+            fragmentTransaction.show(fragment)
+        } else {
+            fragmentTransaction.add(R.id.mainContent, fragment)
+        }
+
         // 프래그먼트 변경 시 현재 프래그먼트 업데이트
         currentFragment = fragment
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.mainContent, fragment).commit()
+        fragmentTransaction.commit()
     }
 
     private fun handleBackPressed() {
