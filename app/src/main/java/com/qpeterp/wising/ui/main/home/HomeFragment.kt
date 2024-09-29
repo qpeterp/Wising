@@ -31,6 +31,8 @@ class HomeFragment : Fragment() {
     ): View {
         initView()
         checkDayChange()
+        binding.homeViewModel = homeViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }
@@ -54,12 +56,8 @@ class HomeFragment : Fragment() {
     private fun checkDayChange() {
         val toDayDate = sharedPreferences.getString("todayDate", "0000-00-00").toString()
         if (getTodayDate() == toDayDate) {
-            bookmarkManager.getQuote(
-                sharedPreferences.getString("quoteId", "SDozgEIhIQeXfl5723s3").toString()
-            ) { result ->
-                binding.toDayWisingContent.text = result.quote
-                binding.toDayWisingAuthor.text = result.name
-            }
+            val todayQuoteId = sharedPreferences.getString("quoteId", "SDozgEIhIQeXfl5723s3").toString()
+            homeViewModel.setTodayQuote(todayQuoteId)
             return
         }
 
