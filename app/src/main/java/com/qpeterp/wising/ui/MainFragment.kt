@@ -20,7 +20,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
     // 각 Fragment를 초기화 시점에 생성하여 재사용
     private val homeFragment = HomeFragment()
     private val booksFragment = BooksFragment()
-    private val bookMarkFragment = BookMarkFragment()
     private val widgetFragment = WidgetFragment()
 
     private lateinit var homeViewModel: HomeViewModel
@@ -41,7 +40,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
             val selectedFragment = when (it.itemId) {
                 R.id.home -> homeFragment
                 R.id.books -> booksFragment
-                R.id.bookMarks -> bookMarkFragment
+                R.id.bookMarks -> BookMarkFragment()
                 R.id.widget -> widgetFragment
                 else -> return@setOnNavigationItemSelectedListener false
             }
