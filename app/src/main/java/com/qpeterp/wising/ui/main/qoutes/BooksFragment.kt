@@ -309,7 +309,11 @@ class BooksFragment : Fragment() {
     }
 
     private fun initView() {
-        quoteList.add(Quote(id = "개발자전용", quote = "화면을 위로 쓸어\n삶에 한줄을 추가해봐요!", name = "개발자"))
+        if (quoteList.isEmpty()) {
+            quoteList.add(Quote(id = "개발자전용", quote = "화면을 위로 쓸어\n삶에 한줄을 추가해봐요!", name = "개발자"))
+        } else {
+            quoteList[0] = Quote(id = "개발자전용", quote = "화면을 위로 쓸어\n삶에 한줄을 추가해봐요!", name = "개발자")
+        }
         loadQuotes()
 
         adapter = ViewPagerAdapter(quoteList, requireActivity().getSharedPreferences("user_prefs", MODE_PRIVATE).getString("androidId", "").toString())
