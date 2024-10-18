@@ -1,10 +1,8 @@
 package com.qpeterp.wising.ui
 
-import android.content.Context
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.activity.addCallback
-import androidx.lifecycle.ViewModelProvider
 import com.qpeterp.wising.R
 import com.qpeterp.wising.common.Constant
 import com.qpeterp.wising.databinding.FragmentMainBinding
@@ -12,8 +10,6 @@ import com.qpeterp.wising.ui.base.BaseFragment
 import com.qpeterp.wising.ui.main.qoutes.BooksFragment
 import com.qpeterp.wising.ui.main.bookmark.BookMarkFragment
 import com.qpeterp.wising.ui.main.home.HomeFragment
-import com.qpeterp.wising.ui.main.home.HomeViewModel
-import com.qpeterp.wising.ui.main.home.HomeViewModelFactory
 import com.qpeterp.wising.ui.main.widget.WidgetFragment
 
 class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
@@ -22,8 +18,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
     private val booksFragment = BooksFragment()
     private val widgetFragment = WidgetFragment()
 
-    private lateinit var homeViewModel: HomeViewModel
-
     private var currentFragment: Fragment? = null
 
     override fun initView() {
@@ -31,10 +25,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
             handleBackPressed()
         }
         changeFragment(homeFragment)
-
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
-        homeViewModel = ViewModelProvider(requireActivity(), HomeViewModelFactory(sharedPreferences)).get(HomeViewModel::class.java)
 
         binding.bottomBar.setOnNavigationItemSelectedListener {
             val selectedFragment = when (it.itemId) {
@@ -66,7 +56,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
     }
 
     private fun handleBackPressed() {
-        Log.d(Constant.TAG, "MainFragment handleBackPressed: 뒤로가기 클릭")
         requireActivity().finish()
     }
 }
