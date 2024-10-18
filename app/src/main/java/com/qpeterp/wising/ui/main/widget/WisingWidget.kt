@@ -64,8 +64,8 @@ internal fun updateAppWidget(
 private fun resizeBitmapToFitWidget(context: Context, bitmap: Bitmap): Bitmap {
     // 위젯의 크기를 가져오기
     val displayMetrics = context.resources.displayMetrics
-    val widgetWidth = displayMetrics.widthPixels / 4  // 적당한 배율로 조정
-    val widgetHeight = displayMetrics.heightPixels / 8
+    val widgetWidth = displayMetrics.widthPixels / 2  // 적당한 배율로 조정
+    val widgetHeight = displayMetrics.heightPixels / 4
 
     return Bitmap.createScaledBitmap(bitmap, widgetWidth, widgetHeight, true)
 }
